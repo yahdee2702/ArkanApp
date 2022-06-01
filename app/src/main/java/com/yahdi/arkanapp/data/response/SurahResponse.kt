@@ -9,4 +9,6 @@ data class SurahResponse(
     val nameArabic: String,
     @SerializedName("englishName")
     val name: String,
+    @SerializedName("ayahs")
+    var ayahs: List<AyahResponse>? = null
 )

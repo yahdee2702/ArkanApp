@@ -1,10 +1,12 @@
 package com.yahdi.arkanapp.data.deserializer
 
-import com.google.gson.JsonDeserializationContext
-import com.google.gson.JsonDeserializer
-import com.google.gson.JsonElement
+import android.util.Log
+import com.google.gson.*
+import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
+import com.yahdi.arkanapp.utils.Utils
 import java.lang.reflect.Type
+import java.text.DateFormat
 
 class SurahDeserializer:JsonDeserializer<SurahResponse> {
     override fun deserialize(
@@ -12,9 +14,31 @@ class SurahDeserializer:JsonDeserializer<SurahResponse> {
         typeOfT: Type,
         context: JsonDeserializationContext
     ): SurahResponse {
-        val data = json.asJsonObject.get("data")
+        val mGson = Utils.getDefaultGson()
+            .registerTypeAdapter(AyahResponse::class.java, AyahDeserializer())
+            .create()
 
-        return TODO("LATER")
+        val data = json.asJsonObject.get("data").asJsonArray
+        val arabicData = data.get(0).asJsonObject
+        val translatedData = data.get(1).asJsonObject
+
+        val surahData = Gson().fromJson(arabicData, SurahResponse::class.java)
+
+        val arabicAyahs = arabicData.get("ayahs").asJsonArray
+        val translatedAyahs = translatedData.get("ayahs").asJsonArray
+
+        val ayahList = arrayListOf<AyahResponse>()
+        arabicAyahs.forEach {
+            val index = arabicAyahs.indexOf(it)
+            val tempList = listOf(it.asJsonObject, translatedAyahs.get(index).asJsonObject)
+            val jsonTempList = mGson.toJsonTree(tempList)
+            Log.d("String", jsonTempList.asJsonArray.toString())
+            val ayah = mGson.fromJson(jsonTempList, AyahResponse::class.java)
+            ayahList.add(ayah)
+        }
+        surahData.ayahs = ayahList
+
+        return surahData
     }
 
 }

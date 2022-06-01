@@ -9,8 +9,8 @@ data class AyahResponse(
     val idInSurah: Int,
     @SerializedName("text")
     val content: String,
-    @SerializedName("sajda")
-    val sajda: SajdaResponse? = null,
+//    @SerializedName("sajda")
+//    val sajda: SajdaResponse? = null,
     var translation: String?
 
 )
