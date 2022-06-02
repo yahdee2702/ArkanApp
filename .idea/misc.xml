@@ -8,6 +8,13 @@
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2370494838664355" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.15628166160081053" />
+        <entry key="app/src/main/res/layout/fragment_ayah.xml" value="0.15628166160081053" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.28072052001953124" />
+        <entry key="app/src/main/res/layout/fragment_quran_contents.xml" value="0.22573394775390626" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.30741081199143555" />
+        <entry key="app/src/main/res/layout/row_item_surah_list.xml" value="0.18135764944275581" />
       </map>
     </option>
   </component>
