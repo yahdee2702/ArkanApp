@@ -17,10 +17,10 @@
         android:theme="@style/Theme.ArkanApp"
         tools:targetApi="31">
         <activity
-            android:name=".QuranActivity"
+            android:name=".ui.QuranActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".ui.SplashScreenActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
