@@ -7,15 +7,15 @@
     tools:context=".ui.SplashScreenActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
 
         <ImageView
             android:id="@+id/imageView4"
@@ -31,21 +31,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arkan"
-            android:textAlignment="center"
-            android:textColor="@color/cyan"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/cyan"/>
 
         <TextView
             android:id="@+id/text_splash_screen"
-            android:layout_width="318dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
-            android:paddingTop="15dp"
             android:text="@string/text_splash_screen"
-            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16sp"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,18 +55,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
+        app:strokeColor="@color/cyan"
+        app:strokeWidth="3dp"
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
         android:text="@string/button_mulai"
         android:textColor="@color/cyan"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.834"
-        app:strokeColor="@color/cyan"
-        app:cornerRadius="10dp"
-        app:strokeWidth="1dp" />
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="637dp"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
