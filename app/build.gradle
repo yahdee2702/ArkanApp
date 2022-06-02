@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "kotlin-kapt"
+    id "kotlin-parcelize"
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -67,8 +69,6 @@ dependencies {
     def coroutines_version = "1.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-
-
 
     // Data Binding
     kapt 'com.android.databinding:compiler:3.2.0-alpha10'
