@@ -3,11 +3,18 @@ package com.yahdi.arkanapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.databinding.RowItemSurahListBinding
 
 class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
+    private var surahList: ArrayList<SurahResponse> = arrayListOf()
+
     class MyViewHolder(val binding: RowItemSurahListBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(data: SurahResponse) {
+            binding.apply {
+                tvListSurahTitle.text = data.name
+                tvListSurahInfo.text = "15"
+            }
         }
 
         companion object {
@@ -19,15 +26,16 @@ class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        TODO("Not yet implemented")
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder = MyViewHolder.from(parent)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(surahList[position])
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    fun setData(newList: ArrayList<SurahResponse>) {
+        surahList = newList
+        notifyDataSetChanged()
     }
+
+    override fun getItemCount(): Int = surahList.size
 }

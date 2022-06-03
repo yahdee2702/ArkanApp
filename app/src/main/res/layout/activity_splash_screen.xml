@@ -7,15 +7,15 @@
     tools:context=".ui.SplashScreenActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
         android:gravity="center"
-        >
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -31,9 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arkan"
+            android:textColor="@color/cyan"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/cyan"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_splash_screen"
@@ -51,19 +51,20 @@
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        app:strokeColor="@color/cyan"
-        app:strokeWidth="3dp"
         android:paddingStart="100dp"
         android:paddingEnd="100dp"
         android:text="@string/button_mulai"
+        android:background="@drawable/start_btn_background"
         android:textColor="@color/cyan"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="637dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

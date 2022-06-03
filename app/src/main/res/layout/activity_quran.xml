@@ -33,6 +33,7 @@
         >
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/quran_navigation_fragment"
             android:name="com.yahdi.arkanapp.ui.fragments.QuranContentsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

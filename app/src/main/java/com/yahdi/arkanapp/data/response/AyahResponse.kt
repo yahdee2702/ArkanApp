@@ -1,7 +1,10 @@
 package com.yahdi.arkanapp.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class AyahResponse(
     @SerializedName("number")
     val id: Int,
@@ -12,5 +15,4 @@ data class AyahResponse(
 //    @SerializedName("sajda")
 //    val sajda: SajdaResponse? = null,
     var translation: String?
-
-)
+): Parcelable
