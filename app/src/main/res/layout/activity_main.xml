@@ -1,19 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <Button
-        android:id="@+id/btn_quran"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Qur'an"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_image_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_time_state_2"
+            android:foregroundGravity="center_horizontal"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_waktu_sholat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_image_time"
+            android:gravity="center"
+            android:text="Dhuhr : 11.37 "
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_image_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_image_time" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="2 Jam 20 Menit Lagi"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_waktu_sholat"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_quran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="-40dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_image_time">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_quran"
+                android:layout_width="wrap_content"
+                android:layout_height="113dp"
+                android:padding="25dp"
+                android:background="@drawable/search_background">
+
+                <ImageView
+                    android:id="@+id/img_book"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/ic_book"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/btn_quran"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/cyan"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Al-Quran"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/cyan"
+                    app:layout_constraintStart_toEndOf="@id/img_book"
+                    app:layout_constraintTop_toTopOf="@id/btn_quran"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_quran"
+                    app:layout_constraintEnd_toEndOf="@id/btn_quran"
+                    android:paddingStart="70dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_jadwal_shalat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/kutipan_islami"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_quran">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin"
+                android:background="@drawable/search_background"
+                android:elevation="6dp"
+                android:orientation="vertical"/>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/kutipan_islami"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/search_background"
+            android:elevation="6dp"
+            android:padding="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_quran">
+
+            <TextView
+                android:id="@+id/tv_kutipan_islami"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kutipan Islami"
+                android:textColor="@color/cyan"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/kutipan_islami"
+                app:layout_constraintTop_toTopOf="@id/kutipan_islami" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="Menghina orang lain tidak pernah menjadi cara untuk mengoreksi mereka. Sebaliknya, itu menyebabkan beberapa kerusakan dan membuktikan bahwa kita membutuhkan bantuan diri kita sendiri."
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_kutipan_islami" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>
