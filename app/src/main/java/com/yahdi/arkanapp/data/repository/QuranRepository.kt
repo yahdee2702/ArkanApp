@@ -3,6 +3,7 @@ package com.yahdi.arkanapp.data.repository
 import com.yahdi.arkanapp.data.network.QuranApi
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.QuranResponse
+import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import retrofit2.Call
 
@@ -17,5 +18,13 @@ class QuranRepository(private val api: QuranApi) {
 
     suspend fun getAyah(id: Int): AyahResponse {
         return api.getAyah(id)
+    }
+
+    suspend fun searchBySurah(keyword: String, id: Int): SearchResponse {
+        return api.searchBySurah(keyword, id)
+    }
+
+    suspend fun searchByAll(keyword: String): SearchResponse {
+        return api.searchByAll(keyword)
     }
 }

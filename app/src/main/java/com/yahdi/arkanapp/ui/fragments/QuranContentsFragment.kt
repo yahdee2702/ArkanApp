@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.QuranViewModel
@@ -26,19 +27,27 @@ class QuranContentsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentQuranContentsBinding.inflate(inflater, container, false)
-        binding.rvQuran.apply {
-            adapter = surahListAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
 
+        initializeRecyclerView()
         getData()
 
         return binding.root
     }
 
+    private fun initializeRecyclerView() {
+        val mLayoutManager = LinearLayoutManager(context)
+        binding.rvQuran.apply {
+            adapter = surahListAdapter
+            layoutManager = mLayoutManager
+            addItemDecoration(
+                DividerItemDecoration(context, mLayoutManager.orientation)
+            )
+        }
+    }
+
     private fun getData() {
         quranViewModel.getQuranData().observe(viewLifecycleOwner) {
-//            surahListAdapter.setData(ArrayList().toArra)
+            surahListAdapter.setData(it)
         }
     }
 }

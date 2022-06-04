@@ -2,18 +2,28 @@ package com.yahdi.arkanapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.databinding.RowItemSurahListBinding
+import com.yahdi.arkanapp.ui.fragments.QuranContentsFragmentDirections
+import com.yahdi.arkanapp.utils.diffutils.SurahDiffUtils
 
 class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
     private var surahList: ArrayList<SurahResponse> = arrayListOf()
 
-    class MyViewHolder(val binding: RowItemSurahListBinding): RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: RowItemSurahListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SurahResponse) {
             binding.apply {
                 tvListSurahTitle.text = data.name
-                tvListSurahInfo.text = "15"
+                tvListSurahInfo.text = "%s ayahs | %s".format(data.ayahsAmount, data.revelationType)
+
+                root.setOnClickListener {
+                    val action = QuranContentsFragmentDirections.actionQuranContentsFragmentToSurahFragment(data)
+                    root.findNavController().navigate(action)
+                }
             }
         }
 
@@ -32,9 +42,11 @@ class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
         holder.bind(surahList[position])
     }
 
-    fun setData(newList: ArrayList<SurahResponse>) {
-        surahList = newList
-        notifyDataSetChanged()
+    fun setData(newList: List<SurahResponse>) {
+        val diffUtil = SurahDiffUtils(surahList, newList)
+        val result = DiffUtil.calculateDiff(diffUtil)
+        surahList = ArrayList(newList)
+        result.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = surahList.size
