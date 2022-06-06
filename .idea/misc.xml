@@ -3,13 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_ayah.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_quran_contents.xml" value="0.10666666666666667" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_search.xml" value="0.17346014492753623" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_surah.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/row_item_search_list.xml" value="0.17346014492753623" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/row_item_surah_list.xml" value="0.17346014492753623" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_main.xml" value="0.2" />
@@ -25,9 +18,11 @@
         <entry key="app/src/main/res/layout/fragment_ayah.xml" value="0.16323051413987297" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.28072052001953124" />
         <entry key="app/src/main/res/layout/fragment_quran_contents.xml" value="0.2592361450195313" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1307159423828125" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.30741081199143555" />
         <entry key="app/src/main/res/layout/fragment_surah.xml" value="0.19651500560619214" />
         <entry key="app/src/main/res/layout/row_item_detail_surah.xml" value="0.25364248960545294" />
+        <entry key="app/src/main/res/layout/row_item_search_list.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/layout/row_item_surah_list.xml" value="0.18135764944275581" />
       </map>
     </option>
