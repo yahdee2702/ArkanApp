@@ -12,7 +12,10 @@ data class AyahResponse(
     val idInSurah: Int,
     @SerializedName("text")
     val content: String,
-//    @SerializedName("sajda")
-//    val sajda: SajdaResponse? = null,
-    var translation: String?
-): Parcelable
+    @SerializedName("surah")
+    val surah: SurahResponse,
+    var sajdaData: SajdaResponse? = null,
+    var translation: String?,
+    var transliteration: String?,
+): Parcelable {
+}

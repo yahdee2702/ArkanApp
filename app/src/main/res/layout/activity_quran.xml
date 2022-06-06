@@ -7,40 +7,31 @@
     tools:context=".ui.QuranActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/quran_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:fitsSystemWindows="true">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/quran_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="true"
-            app:title="Al-Qur'an">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="10dp"
+            app:title="Al-Qur'an"
+            />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/quran_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/quran_navigation_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        >
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/quran_navigation_fragment"
-            android:name="com.yahdi.arkanapp.ui.fragments.QuranContentsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:defaultNavHost="true"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            app:navGraph="@navigation/quran_navigation" />
-
-    </RelativeLayout>
+        app:defaultNavHost="true"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        app:navGraph="@navigation/quran_navigation" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

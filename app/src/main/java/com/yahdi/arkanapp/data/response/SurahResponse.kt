@@ -12,6 +12,9 @@ data class SurahResponse(
     val nameArabic: String,
     @SerializedName("englishName")
     val name: String,
-    @SerializedName("ayahs")
+    @SerializedName("revelationType")
+    val revelationType: String,
+    @SerializedName("numberOfAyahs")
+    val ayahsAmount: Int,
     var ayahs: List<AyahResponse>? = null
 ): Parcelable
