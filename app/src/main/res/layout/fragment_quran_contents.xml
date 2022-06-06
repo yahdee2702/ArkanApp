@@ -16,6 +16,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:inputType="text"
+        app:queryBackground="@android:color/transparent"
         app:closeIcon="@drawable/ic_close"
         app:defaultQueryHint="Search your surah"
         app:iconifiedByDefault="false"
@@ -26,7 +27,7 @@
         app:searchIcon="@drawable/ic_search" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/search_tombol"
+        android:id="@+id/btn_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/search_background"
@@ -62,7 +63,7 @@
         android:nestedScrollingEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_tombol"
+        app:layout_constraintTop_toBottomOf="@id/btn_search"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_item_surah_list"/>

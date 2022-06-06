@@ -20,8 +20,8 @@ class QuranRepository(private val api: QuranApi) {
         return api.getAyah(id)
     }
 
-    suspend fun searchBySurah(keyword: String, id: Int): SearchResponse {
-        return api.searchBySurah(keyword, id)
+    suspend fun searchBySurah(id: Int, keyword: String): SearchResponse {
+        return api.searchBySurah(id, keyword)
     }
 
     suspend fun searchByAll(keyword: String): SearchResponse {

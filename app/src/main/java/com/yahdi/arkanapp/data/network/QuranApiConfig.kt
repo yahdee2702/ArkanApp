@@ -6,10 +6,12 @@ import com.google.gson.GsonBuilder
 import com.yahdi.arkanapp.BuildConfig
 import com.yahdi.arkanapp.data.deserializer.AyahDeserializer
 import com.yahdi.arkanapp.data.deserializer.QuranDeserializer
+import com.yahdi.arkanapp.data.deserializer.SearchDeserializer
 import com.yahdi.arkanapp.data.deserializer.SurahDeserializer
 //import com.yahdi.arkanapp.data.deserializer.SurahListDeserializer
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.QuranResponse
+import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.utils.Utils
 import okhttp3.Interceptor
@@ -42,6 +44,7 @@ object QuranApiConfig {
             .registerTypeAdapter(AyahResponse::class.java, AyahDeserializer())
             .registerTypeAdapter(SurahResponse::class.java, SurahDeserializer())
             .registerTypeAdapter(QuranResponse::class.java, QuranDeserializer())
+            .registerTypeAdapter(SearchResponse::class.java, SearchDeserializer())
             .create()
 
         return Retrofit.Builder()

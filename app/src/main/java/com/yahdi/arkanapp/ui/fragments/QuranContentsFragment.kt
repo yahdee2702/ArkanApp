@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yahdi.arkanapp.R
@@ -30,6 +31,10 @@ class QuranContentsFragment : Fragment() {
 
         initializeRecyclerView()
         getData()
+
+        binding.btnSearch.setOnClickListener {
+            binding.root.findNavController().navigate(R.id.action_quranContentsFragment_to_searchFragment2)
+        }
 
         return binding.root
     }

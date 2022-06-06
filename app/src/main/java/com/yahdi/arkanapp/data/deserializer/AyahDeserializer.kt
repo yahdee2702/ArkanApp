@@ -25,7 +25,7 @@ class AyahDeserializer: JsonDeserializer<AyahResponse> {
             ayah.sajdaData = Gson().fromJson(tempSajda, SajdaResponse::class.java)
         }
         ayah.translation = data.get(1).asJsonObject.get("text").asString
-        ayah.transliteration = data.get(1).asJsonObject.get("text").asString
+        ayah.transliteration = data.get(2).asJsonObject.get("text").asString
         
         return ayah;
     }

@@ -13,7 +13,7 @@ data class AyahResponse(
     @SerializedName("text")
     val content: String,
     @SerializedName("surah")
-    val surah: SurahResponse,
+    val surah: SurahResponse? = null,
     var sajdaData: SajdaResponse? = null,
     var translation: String? = null,
     var transliteration: String? = null,

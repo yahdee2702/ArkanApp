@@ -18,7 +18,7 @@ interface QuranApi {
     suspend fun getAyah(@Path("ayahId") id:Int): AyahResponse
 
     @GET("search/{keyword}/{surah}/id.indonesian")
-    suspend fun searchBySurah(@Path("keyword") keyword:String, @Path("surah") surah: Int): SearchResponse
+    suspend fun searchBySurah(@Path("surah") surah: Int, @Path("keyword") keyword:String): SearchResponse
 
 
     @GET("search/{keyword}/all/id.indonesian")

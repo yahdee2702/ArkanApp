@@ -57,13 +57,16 @@ class SurahFragment : Fragment() {
                 DividerItemDecoration(context, mLayoutManager.orientation)
             )
         }
+
+        if (navArgs.jumpTo != -1) {
+            mLayoutManager.scrollToPositionWithOffset(navArgs.jumpTo, 20)
+        }
     }
 
     private fun getData(data: SurahResponse) {
         quranViewModel.getSurahFromId(data.id).observe(viewLifecycleOwner) { response ->
-            data.ayahs = response.ayahs
-            data.ayahs?.let {
-                    ayahAdapter.setData(it)
+            response.ayahs.let {
+                    ayahAdapter.setData(it!!)
             }
         }
     }

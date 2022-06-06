@@ -8,6 +8,7 @@ import com.yahdi.arkanapp.data.network.QuranApi
 import com.yahdi.arkanapp.data.network.QuranApiConfig
 import com.yahdi.arkanapp.data.repository.QuranRepository
 import com.yahdi.arkanapp.data.response.AyahResponse
+import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import kotlinx.coroutines.launch
 
@@ -15,6 +16,7 @@ class QuranViewModel: ViewModel() {
     private val api: QuranApi = QuranApiConfig.getApiService()
     private val repository: QuranRepository = QuranRepository(api)
     private val quranData = MutableLiveData<List<SurahResponse>>()
+    val searchData = MutableLiveData<SearchResponse>()
 
     fun getQuranData(): LiveData<List<SurahResponse>> {
         if (quranData.value == null) {
@@ -43,5 +45,17 @@ class QuranViewModel: ViewModel() {
         }
 
         return response
+    }
+
+    fun searchBySurah(id: Int, keyword: String) {
+        viewModelScope.launch {
+            searchData.value = repository.searchBySurah(id, keyword)
+        }
+    }
+
+    fun searchByAll(keyword: String) {
+        viewModelScope.launch {
+            searchData.value = repository.searchByAll(keyword)
+        }
     }
 }
