@@ -15,6 +15,7 @@ class AyahListAdapter : RecyclerView.Adapter<AyahListAdapter.MyViewHolder>() {
     class MyViewHolder(private val binding: RowItemDetailSurahBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: AyahResponse) {
+            println(data)
             binding.tvAyahArabic.text = Utils.removeBasmallah(data)
             binding.tvAyahTranslate.text = data.translation
             binding.tvAyahLatin.text = data.transliteration

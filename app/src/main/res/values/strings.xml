@@ -16,4 +16,16 @@
 
     <string name="text_splash_screen">Anda akan di teman oleh Arkan setiap saat dan tetap menjaga keistiqomahan dalam beribadah </string>
     <string name="button_mulai">Mulai</string>
+    <string name="txt_zero_timer">00:00</string>
+    <string name="txt_fajr_time">Fajr</string>
+    <string name="txt_sunrise_time">Sunrise</string>
+    <string name="txt_dhuhr_time">Dhuhr</string>
+    <string name="txt_kutipan_islami_desc">Menghina orang lain tidak pernah menjadi cara untuk mengoreksi mereka. Sebaliknya, itu menyebabkan beberapa kerusakan dan membuktikan bahwa kita membutuhkan bantuan diri kita sendiri.</string>
+    <string name="txt_kutipan_islami">Kutipan Islami</string>
+    <string name="txt_al_quran">Al-Quran</string>
+    <string name="txt_asr_time">Asr</string>
+    <string name="txt_maghrib_time">Maghrib</string>
+    <string name="txt_ishaa_time">Ishaa</string>
+    <string name="dummy_content_description">Dummy content description.</string>
+    <string name="txt_date">%s | %s</string>
 </resources>

@@ -70,11 +70,9 @@ class SurahFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
-        mainActivity.setTitle("Al-Qur'an")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _mainActivity = null
     }
 }

@@ -15,7 +15,6 @@ data class AyahResponse(
     @SerializedName("surah")
     val surah: SurahResponse,
     var sajdaData: SajdaResponse? = null,
-    var translation: String?,
-    var transliteration: String?,
-): Parcelable {
-}
+    var translation: String? = null,
+    var transliteration: String? = null,
+): Parcelable
