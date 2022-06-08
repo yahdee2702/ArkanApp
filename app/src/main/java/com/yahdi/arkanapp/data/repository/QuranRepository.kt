@@ -6,6 +6,7 @@ import com.yahdi.arkanapp.data.response.QuranResponse
 import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import retrofit2.Call
+import retrofit2.Response
 
 class QuranRepository(private val api: QuranApi) {
     suspend fun getQuran(): QuranResponse {
@@ -20,11 +21,11 @@ class QuranRepository(private val api: QuranApi) {
         return api.getAyah(id)
     }
 
-    suspend fun searchBySurah(id: Int, keyword: String): SearchResponse {
+    suspend fun searchBySurah(id: Int, keyword: String): Response<SearchResponse?> {
         return api.searchBySurah(id, keyword)
     }
 
-    suspend fun searchByAll(keyword: String): SearchResponse {
+    suspend fun searchByAll(keyword: String): Response<SearchResponse?> {
         return api.searchByAll(keyword)
     }
 }

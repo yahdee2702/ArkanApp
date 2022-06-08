@@ -18,7 +18,9 @@ class QuranActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.quranToolbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.quran_navigation_fragment)
-//        val navController = navHostFragment?.findNavController()!!
+        val navController = navHostFragment?.findNavController()!!
+
+        setupActionBarWithNavController(navController)
     }
 
     fun setTitle(title: String) {
@@ -28,7 +30,6 @@ class QuranActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.quran_navigation_fragment)
         val navController = navHostFragment?.findNavController()!!
-//        val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

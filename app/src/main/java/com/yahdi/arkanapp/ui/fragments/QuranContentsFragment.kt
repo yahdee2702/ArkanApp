@@ -1,16 +1,19 @@
 package com.yahdi.arkanapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yahdi.arkanapp.R
-import com.yahdi.arkanapp.data.QuranViewModel
+import com.yahdi.arkanapp.data.response.SurahResponse
+import com.yahdi.arkanapp.data.viewModel.QuranViewModel
 import com.yahdi.arkanapp.databinding.FragmentQuranContentsBinding
 import com.yahdi.arkanapp.ui.adapters.SurahListAdapter
 
@@ -23,6 +26,8 @@ class QuranContentsFragment : Fragment() {
         SurahListAdapter()
     }
 
+    private var surahList: ArrayList<SurahResponse> = arrayListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +36,25 @@ class QuranContentsFragment : Fragment() {
 
         initializeRecyclerView()
         getData()
+
+        binding.svSurahSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isNotEmpty()) {
+                    val searched = surahList.filter {
+                        Regex("(?:$newText)", RegexOption.IGNORE_CASE).containsMatchIn(it.name)
+                    }
+                    surahListAdapter.setData(searched)
+                } else {
+                    surahListAdapter.setData(surahList)
+                }
+                return false
+            }
+
+        })
 
         binding.btnSearch.setOnClickListener {
             binding.root.findNavController().navigate(R.id.action_quranContentsFragment_to_searchFragment2)
@@ -52,7 +76,8 @@ class QuranContentsFragment : Fragment() {
 
     private fun getData() {
         quranViewModel.getQuranData().observe(viewLifecycleOwner) {
-            surahListAdapter.setData(it)
+            surahList = ArrayList(it)
+            surahListAdapter.setData(surahList)
         }
     }
 }

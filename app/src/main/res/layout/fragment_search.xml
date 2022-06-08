@@ -18,6 +18,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:inputType="text"
+        app:queryBackground="@android:color/transparent"
         app:defaultQueryHint="Search your surah"
         app:iconifiedByDefault="false"
         app:closeIcon="@drawable/ic_close"

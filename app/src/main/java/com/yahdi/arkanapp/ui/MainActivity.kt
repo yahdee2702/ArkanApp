@@ -6,6 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.format.DateUtils
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,6 +29,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private var timerRunnable: Runnable? = null
+    private val timerHandler = Handler(Looper.getMainLooper())
+
     private var _tracker: GPSTracker? = null
     private val tracker get() = _tracker as GPSTracker
 
@@ -90,23 +98,61 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForLocation() {
-        tracker.location.let {
-            val calendar = GregorianCalendar()
-            val today = SimpleDate(calendar)
+        if (!tracker.isAvailable) return
 
-            val mLocation = Location(it.latitude, it.longitude, Utils.getGMTDifference(calendar), 0)
-            val azan = Azan(mLocation, Method.KARACHI_SHAF)
+        val location = tracker.location
+        val calendar = GregorianCalendar()
+        val today = SimpleDate(calendar)
 
-            azan.getPrayerTimes(today).let { time ->
-                binding.apply {
-                    tvFajrTime.text = Utils.formatPrayerTime(time.fajr())
-                    tvSunriseTime.text = Utils.formatPrayerTime(time.shuruq())
-                    tvDhuhrTime.text = Utils.formatPrayerTime(time.thuhr())
-                    tvAsrTime.text = Utils.formatPrayerTime(time.assr())
-                    tvMaghribTime.text = Utils.formatPrayerTime(time.maghrib())
-                    tvIshaaTime.text = Utils.formatPrayerTime(time.ishaa())
-                }
+        val mLocation = Location(location.latitude, location.longitude, Utils.getGMTDifference(calendar), 0)
+        val azan = Azan(mLocation, Method.KARACHI_SHAF)
+
+        azan.getPrayerTimes(today).let { time ->
+            val prayerTimes = arrayListOf(
+                time.fajr(),
+                time.shuruq(),
+                time.thuhr(),
+                time.assr(),
+                time.maghrib(),
+                time.ishaa()
+            ).map{ prayerTime ->
+                Utils.changePrayerTimeToDate(prayerTime)
             }
+
+            binding.apply {
+                tvFajrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[0])
+                tvSunriseTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[1])
+                tvDhuhrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[2])
+                tvAsrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[3])
+                tvMaghribTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[4])
+                tvIshaaTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[5])
+                tvLocation.text = getString(R.string.txt_location).format(tracker.getCityName(), tracker.getCountryName())
+            }
+
+            timerHandler.postDelayed(object: Runnable {
+                override fun run(){
+                    val calendarNow = Calendar.getInstance()
+                    val nextPrayer = Utils.getNextPrayer(this@MainActivity, calendarNow.time, time)
+                    val currentImgState = Utils.getImageTimeStateFromPrayer(calendarNow.time, time)
+
+                    binding.ivImageTime.setImageResource(currentImgState)
+
+
+                    for (prayerTime in prayerTimes) {
+                        val timeLeft = prayerTime.time - calendarNow.time.time
+                        val index = prayerTimes.indexOf(prayerTime)
+
+                        Log.d("Left", timeLeft.toString() + "Index: $index")
+                        if (timeLeft > 0) {
+                            binding.tvTimeLeft.text = getString(R.string.txt_time_detail).format(DateUtils.formatElapsedTime(timeLeft/1000), nextPrayer)
+                            break
+                        }
+                    }
+
+                    timerRunnable = this
+                    timerHandler.postDelayed(this, 1000)
+                }
+            }, 10)
         }
     }
 
@@ -121,6 +167,13 @@ class MainActivity : AppCompatActivity() {
                 normalFormatter.format(today.time),
                 hijrahFormatter.format(hijrahDate)
             )
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (timerRunnable != null) {
+            timerHandler.removeCallbacks(timerRunnable!!)
         }
     }
 }

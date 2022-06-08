@@ -9,9 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yahdi.arkanapp.R
-import com.yahdi.arkanapp.data.QuranViewModel
-import com.yahdi.arkanapp.data.response.SurahResponse
+import com.yahdi.arkanapp.data.viewModel.QuranViewModel
 import com.yahdi.arkanapp.databinding.FragmentSurahBinding
 import com.yahdi.arkanapp.ui.QuranActivity
 import com.yahdi.arkanapp.ui.adapters.AyahListAdapter
@@ -25,7 +23,12 @@ class SurahFragment : Fragment() {
     private var _mainActivity: QuranActivity? = null
     private val mainActivity get() = _mainActivity as QuranActivity
 
+    private var _mLayoutManager: LinearLayoutManager? = null
+    private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
+
     private val quranViewModel by viewModels<QuranViewModel>()
+
+    private var ableToJump = false
 
     private val ayahAdapter by lazy {
         AyahListAdapter()
@@ -37,19 +40,17 @@ class SurahFragment : Fragment() {
     ): View {
         _binding = FragmentSurahBinding.inflate(layoutInflater, container, false)
         _mainActivity = activity as QuranActivity
+        _mLayoutManager = LinearLayoutManager(context)
 
-        val data = navArgs.surahData
-        mainActivity.setTitle(data.name)
+        mainActivity.setTitle(navArgs.surahData.name)
 
         initializeRecyclerView()
-        getData(data)
+        getData()
 
         return binding.root
     }
 
     private fun initializeRecyclerView() {
-        val mLayoutManager = LinearLayoutManager(context)
-
         binding.rvAyahList.apply {
             adapter = ayahAdapter
             layoutManager = mLayoutManager
@@ -57,25 +58,32 @@ class SurahFragment : Fragment() {
                 DividerItemDecoration(context, mLayoutManager.orientation)
             )
         }
-
-        if (navArgs.jumpTo != -1) {
-            mLayoutManager.scrollToPositionWithOffset(navArgs.jumpTo, 20)
+        if (navArgs.jumpTo != 0) {
+            ableToJump = true
         }
     }
 
-    private fun getData(data: SurahResponse) {
-        quranViewModel.getSurahFromId(data.id).observe(viewLifecycleOwner) { response ->
+    private fun getData() {
+        quranViewModel.getSurahFromId(navArgs.surahData.id).observe(viewLifecycleOwner) { response ->
             response.ayahs.let {
                     ayahAdapter.setData(it!!)
+                if (ableToJump) {
+                    ableToJump = false
+                    mLayoutManager.scrollToPositionWithOffset(navArgs.jumpTo-1, 20)
+                }
             }
         }
     }
 
     override fun onDetach() {
         super.onDetach()
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        mainActivity.setTitle("Al-Qur'an")
+        _mainActivity = null
+        _binding = null
     }
 }

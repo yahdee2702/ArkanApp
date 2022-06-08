@@ -1,5 +1,6 @@
 package com.yahdi.arkanapp.data.network
 
+import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit
 
 
 object QuranApiConfig {
-    fun getApiService(): QuranApi {
+    fun getApiService(context: Context): QuranApi {
         val loggingInterceptor = if (BuildConfig.DEBUG)
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         else

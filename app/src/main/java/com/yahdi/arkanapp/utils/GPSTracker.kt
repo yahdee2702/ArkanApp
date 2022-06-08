@@ -16,7 +16,7 @@ class GPSTracker(val context: Context): LocationListener {
         private val TAG = GPSTracker::class.java.name
         private const val MIN_DISTANCE_CHANGE_FOR_UPDATES = 10.0f
         private const val MIN_TIME_BW_UPDATES = (1000 * 60 * 1).toLong()
-        private const val GEOCODER_MAX_RESULTS = 1
+        private const val GEOCODER_MAX_RESULTS = 3
     }
 
     private var isGPSEnabled = false
@@ -29,6 +29,7 @@ class GPSTracker(val context: Context): LocationListener {
         requestLocation()
         return _location as Location
     }
+    val isAvailable get() = _location != null
 
     private lateinit var locationManager: LocationManager
 
@@ -92,7 +93,7 @@ class GPSTracker(val context: Context): LocationListener {
         return emptyList()
     }
 
-    fun getPostalCode(context: Context): String? {
+    fun getPostalCode(): String? {
         val addresses: List<Address>? = getGeocoderAddress(context)
         return if (addresses != null && addresses.isNotEmpty()) {
             val address: Address = addresses[0]
@@ -102,7 +103,17 @@ class GPSTracker(val context: Context): LocationListener {
         }
     }
 
-    fun getCountryName(context: Context): String? {
+    fun getCityName(): String? {
+        val addresses: List<Address>? = getGeocoderAddress(context)
+        return if (addresses != null && addresses.isNotEmpty()) {
+            val address: Address = addresses[0]
+            address.locality
+        } else {
+            null
+        }
+    }
+
+    fun getCountryName(): String? {
         val addresses: List<Address>? = getGeocoderAddress(context)
         return if (addresses != null && addresses.isNotEmpty()) {
             val address: Address = addresses[0]

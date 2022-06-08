@@ -22,29 +22,41 @@
             android:contentDescription="@string/dummy_content_description" />
 
         <TextView
-            android:id="@+id/tv_waktu_sholat"
+            android:id="@+id/tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_image_time"
-            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:text="@string/txt_location"
+            app:layout_constraintBottom_toTopOf="@id/dc_waktu_sholat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextClock
+            android:id="@+id/dc_waktu_sholat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="48sp"
-            android:textStyle="bold"
+            android:format24Hour="HH:mm"
+            android:format12Hour="hh:mm a"
             app:layout_constraintBottom_toBottomOf="@+id/iv_image_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_image_time" />
+            app:layout_constraintTop_toTopOf="@+id/iv_image_time"/>
 
         <TextView
-            android:id="@+id/tv_detail"
+            android:id="@+id/tv_time_left"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="20sp"
+            android:text="@string/txt_time_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_waktu_sholat"/>
+            app:layout_constraintTop_toBottomOf="@id/dc_waktu_sholat"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

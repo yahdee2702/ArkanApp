@@ -31,10 +31,10 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.MyViewHolder>()
 
         fun bind(data: AyahResponse) {
             binding.root.setOnClickListener {
-                val action = SearchFragmentDirections.actionSearchFragmentToSurahFragment(data.surah!!, data.id)
+                val action = SearchFragmentDirections.actionSearchFragmentToSurahFragment(data.surah!!, data.idInSurah)
                 it.findNavController().navigate(action)
             }
-            binding.tvSearchContent.text = "${data.translation} - ${data.surah!!.name}"
+            binding.tvSearchContent.text = "${data.content} - ${data.surah!!.name} ${data.surah.id}:${data.idInSurah}"
         }
     }
 
@@ -50,5 +50,6 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.MyViewHolder>()
         val diffUtil = AyahDiffUtils(searchedList, searched.matches)
         val result = DiffUtil.calculateDiff(diffUtil)
         searchedList = ArrayList(searched.matches)
+        result.dispatchUpdatesTo(this)
     }
 }

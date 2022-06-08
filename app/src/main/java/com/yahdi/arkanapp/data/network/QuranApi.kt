@@ -4,6 +4,7 @@ import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.QuranResponse
 import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -18,9 +19,8 @@ interface QuranApi {
     suspend fun getAyah(@Path("ayahId") id:Int): AyahResponse
 
     @GET("search/{keyword}/{surah}/id.indonesian")
-    suspend fun searchBySurah(@Path("surah") surah: Int, @Path("keyword") keyword:String): SearchResponse
-
+    suspend fun searchBySurah(@Path("surah") surah: Int, @Path("keyword") keyword:String): Response<SearchResponse?>
 
     @GET("search/{keyword}/all/id.indonesian")
-    suspend fun searchByAll(@Path("keyword") keyword:String): SearchResponse
+    suspend fun searchByAll(@Path("keyword") keyword:String): Response<SearchResponse?>
 }

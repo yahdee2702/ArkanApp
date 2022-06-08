@@ -40,7 +40,7 @@
         <argument
             android:name="jumpTo"
             app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

@@ -1,9 +1,7 @@
-package com.yahdi.arkanapp.data
+package com.yahdi.arkanapp.data.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.yahdi.arkanapp.data.network.QuranApi
 import com.yahdi.arkanapp.data.network.QuranApiConfig
 import com.yahdi.arkanapp.data.repository.QuranRepository
@@ -12,11 +10,12 @@ import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import kotlinx.coroutines.launch
 
-class QuranViewModel: ViewModel() {
-    private val api: QuranApi = QuranApiConfig.getApiService()
+class QuranViewModel(application: Application): AndroidViewModel(application) {
+    private val context = application.applicationContext
+    private val api: QuranApi = QuranApiConfig.getApiService(context)
     private val repository: QuranRepository = QuranRepository(api)
     private val quranData = MutableLiveData<List<SurahResponse>>()
-    val searchData = MutableLiveData<SearchResponse>()
+    val searchData = MutableLiveData<SearchResponse?>()
 
     fun getQuranData(): LiveData<List<SurahResponse>> {
         if (quranData.value == null) {
@@ -49,13 +48,19 @@ class QuranViewModel: ViewModel() {
 
     fun searchBySurah(id: Int, keyword: String) {
         viewModelScope.launch {
-            searchData.value = repository.searchBySurah(id, keyword)
+            val res = repository.searchBySurah(id, keyword)
+            if (res.isSuccessful) {
+                searchData.value = res.body()
+            }
         }
     }
 
     fun searchByAll(keyword: String) {
         viewModelScope.launch {
-            searchData.value = repository.searchByAll(keyword)
+            val res = repository.searchByAll(keyword)
+            if (res.isSuccessful) {
+                searchData.value = res.body()
+            }
         }
     }
 }

@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:defaultNavHost="true"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
         app:navGraph="@navigation/quran_navigation" />
