@@ -142,7 +142,6 @@ class MainActivity : AppCompatActivity() {
                         val timeLeft = prayerTime.time - calendarNow.time.time
                         val index = prayerTimes.indexOf(prayerTime)
 
-                        Log.d("Left", timeLeft.toString() + "Index: $index")
                         if (timeLeft > 0) {
                             binding.tvTimeLeft.text = getString(R.string.txt_time_detail).format(DateUtils.formatElapsedTime(timeLeft/1000), nextPrayer)
                             break

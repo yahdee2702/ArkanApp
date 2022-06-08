@@ -1,6 +1,7 @@
 package com.yahdi.arkanapp.data.network
 
 import android.content.Context
+import android.net.ConnectivityManager
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -35,7 +36,7 @@ object QuranApiConfig {
         val client = OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(defaultHttpClient())
+            .addInterceptor(defaultHttpClient(context))
             .pingInterval(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -57,7 +58,7 @@ object QuranApiConfig {
     }
 
     @Throws(IOException::class)
-    private fun defaultHttpClient(): Interceptor {
+    private fun defaultHttpClient(context: Context): Interceptor {
         return Interceptor { chain ->
             val request = chain.request()
                 .newBuilder()
