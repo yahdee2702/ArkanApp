@@ -2,13 +2,12 @@ package com.yahdi.arkanapp.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yahdi.arkanapp.R
@@ -16,6 +15,8 @@ import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.data.viewModel.QuranViewModel
 import com.yahdi.arkanapp.databinding.FragmentQuranContentsBinding
 import com.yahdi.arkanapp.ui.adapters.SurahListAdapter
+import com.yahdi.arkanapp.utils.LoadingManager
+import com.yahdi.arkanapp.utils.Utils
 
 class QuranContentsFragment : Fragment() {
     private var _binding: FragmentQuranContentsBinding? = null
@@ -34,33 +35,51 @@ class QuranContentsFragment : Fragment() {
     ): View {
         _binding = FragmentQuranContentsBinding.inflate(inflater, container, false)
 
+        setHasOptionsMenu(true)
         initializeRecyclerView()
+        setUpSearch()
         getData()
 
-        binding.svSurahSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isNotEmpty()) {
-                    val searched = surahList.filter {
-                        Regex("(?:$newText)", RegexOption.IGNORE_CASE).containsMatchIn(it.name)
-                    }
-                    surahListAdapter.setData(searched)
-                } else {
-                    surahListAdapter.setData(surahList)
-                }
-                return false
-            }
-
-        })
-
-        binding.btnSearch.setOnClickListener {
-            binding.root.findNavController().navigate(R.id.action_quranContentsFragment_to_searchFragment2)
-        }
-
         return binding.root
+    }
+
+    private fun setUpSearch() {
+        binding.svTitleSearch.apply {
+            queryHint = getString(R.string.txt_search).format("surah title")
+            setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    if (newText.isNotEmpty()) {
+                        val searched = surahList.filter {
+                            Regex(newText, RegexOption.IGNORE_CASE).containsMatchIn(it.name)
+                        }
+                        surahListAdapter.setData(searched)
+                    } else {
+                        surahListAdapter.setData(surahList)
+                    }
+                    return false
+                }
+
+            })
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.menu_quran, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_search -> {
+                val action = QuranContentsFragmentDirections.actionQuranContentsFragmentToSearchFragment2(null)
+                this.findNavController().navigate(action)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initializeRecyclerView() {
@@ -75,7 +94,11 @@ class QuranContentsFragment : Fragment() {
     }
 
     private fun getData() {
+        if (!Utils.isOnline(requireContext())) return
+        val loading = LoadingManager(viewLifecycleOwner, binding.progressMain)
+        loading.isLoading.value = true
         quranViewModel.getQuranData().observe(viewLifecycleOwner) {
+            loading.isLoading.value = false
             surahList = ArrayList(it)
             surahListAdapter.setData(surahList)
         }

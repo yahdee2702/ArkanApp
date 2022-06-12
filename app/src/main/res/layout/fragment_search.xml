@@ -11,29 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/search_background"
-        android:elevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:inputType="text"
+        android:elevation="2dp"
         app:queryBackground="@android:color/transparent"
-        app:defaultQueryHint="Search your surah"
+        app:defaultQueryHint="@string/txt_search"
         app:iconifiedByDefault="false"
         app:closeIcon="@drawable/ic_close"
         app:searchIcon="@drawable/ic_search"
-        app:searchHintIcon="@drawable/ic_search"
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sv_surahSearch"
         tools:listitem="@layout/row_item_search_list"/>
+
+
+    <ProgressBar
+        android:id="@+id/progress_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/cyan"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

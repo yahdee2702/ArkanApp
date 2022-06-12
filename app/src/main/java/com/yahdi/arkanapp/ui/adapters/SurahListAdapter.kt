@@ -18,7 +18,8 @@ class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
         fun bind(data: SurahResponse) {
             binding.apply {
                 tvListSurahTitle.text = data.name
-                tvListSurahInfo.text = "%s ayahs | %s".format(data.ayahsAmount, data.revelationType)
+                tvListSurahInfo.text = binding.root.context.getString(R.string.txt_surah_info).format(data.ayahsAmount.toString(), data.revelationType)
+                tvListSurahArabic.text = data.nameArabic.substring(7)
 
                 root.setOnClickListener {
                     val action = QuranContentsFragmentDirections.actionQuranContentsFragmentToSurahFragment(data)

@@ -1,6 +1,5 @@
 package com.yahdi.arkanapp.data.viewModel
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.yahdi.arkanapp.data.network.QuranApi
 import com.yahdi.arkanapp.data.network.QuranApiConfig
@@ -10,9 +9,8 @@ import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import kotlinx.coroutines.launch
 
-class QuranViewModel(application: Application): AndroidViewModel(application) {
-    private val context = application.applicationContext
-    private val api: QuranApi = QuranApiConfig.getApiService(context)
+class QuranViewModel: ViewModel() {
+    private val api: QuranApi = QuranApiConfig.getApiService()
     private val repository: QuranRepository = QuranRepository(api)
     private val quranData = MutableLiveData<List<SurahResponse>>()
     val searchData = MutableLiveData<SearchResponse?>()

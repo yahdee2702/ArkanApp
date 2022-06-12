@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.util.Calendar
+import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,15 +13,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.azan.Azan
-import com.azan.Method
-import com.azan.astrologicalCalc.Location
-import com.azan.astrologicalCalc.SimpleDate
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.databinding.ActivityMainBinding
-import com.yahdi.arkanapp.utils.GPSTracker
-import com.yahdi.arkanapp.utils.Utils
+import com.yahdi.arkanapp.utils.*
+import com.yahdi.arkanapp.utils.Utils.formatBasedOnSystemFormat
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.time.chrono.HijrahDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -30,8 +27,11 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private var timerRunnable: Runnable? = null
-    private val timerHandler = Handler(Looper.getMainLooper())
+    private val prayerChanging = LooperListener()
+        .setDelay(100000L)
+
+    private val timeChanged = LooperListener()
+        .setDelay(1000L)
 
     private var _tracker: GPSTracker? = null
     private val tracker get() = _tracker as GPSTracker
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
-                    checkForLocation()
+                    setupAzan()
                 } else {
                     Toast.makeText(
                         this, "You need to grant permission to access location",
@@ -88,71 +88,59 @@ class MainActivity : AppCompatActivity() {
                 this,
                 arrayOf(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 ),
                 1000
             )
             return
         }
-        checkForLocation()
+        setupAzan()
     }
 
-    private fun checkForLocation() {
+    private fun setupAzan() {
+        Log.d("Tracker", tracker.isAvailable.toString())
         if (!tracker.isAvailable) return
 
-        val location = tracker.location
-        val calendar = GregorianCalendar()
-        val today = SimpleDate(calendar)
+        Log.d("Location", "available")
 
-        val mLocation = Location(location.latitude, location.longitude, Utils.getGMTDifference(calendar), 0)
-        val azan = Azan(mLocation, Method.KARACHI_SHAF)
-
-        azan.getPrayerTimes(today).let { time ->
-            val prayerTimes = arrayListOf(
-                time.fajr(),
-                time.shuruq(),
-                time.thuhr(),
-                time.assr(),
-                time.maghrib(),
-                time.ishaa()
-            ).map{ prayerTime ->
-                Utils.changePrayerTimeToDate(prayerTime)
-            }
-
-            binding.apply {
-                tvFajrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[0])
-                tvSunriseTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[1])
-                tvDhuhrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[2])
-                tvAsrTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[3])
-                tvMaghribTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[4])
-                tvIshaaTime.text = Utils.formatBasedOnSystemFormat(this@MainActivity, prayerTimes[5])
-                tvLocation.text = getString(R.string.txt_location).format(tracker.getCityName(), tracker.getCountryName())
-            }
-
-            timerHandler.postDelayed(object: Runnable {
-                override fun run(){
-                    val calendarNow = Calendar.getInstance()
-                    val nextPrayer = Utils.getNextPrayer(this@MainActivity, calendarNow.time, time)
-                    val currentImgState = Utils.getImageTimeStateFromPrayer(calendarNow.time, time)
-
-                    binding.ivImageTime.setImageResource(currentImgState)
-
-
-                    for (prayerTime in prayerTimes) {
-                        val timeLeft = prayerTime.time - calendarNow.time.time
-                        val index = prayerTimes.indexOf(prayerTime)
-
-                        if (timeLeft > 0) {
-                            binding.tvTimeLeft.text = getString(R.string.txt_time_detail).format(DateUtils.formatElapsedTime(timeLeft/1000), nextPrayer)
-                            break
-                        }
-                    }
-
-                    timerRunnable = this
-                    timerHandler.postDelayed(this, 1000)
+        prayerChanging
+            .setListener {
+                val today = Calendar.getInstance()
+                val prayer = Prayer(tracker.location, today)
+                binding.apply {
+                    tvFajrTime.text = prayer.fajr.formatBasedOnSystemFormat(this@MainActivity)
+                    tvSunriseTime.text = prayer.shuruq.formatBasedOnSystemFormat(this@MainActivity)
+                    tvDhuhrTime.text = prayer.dhuhur.formatBasedOnSystemFormat(this@MainActivity)
+                    tvAsrTime.text = prayer.assr.formatBasedOnSystemFormat(this@MainActivity)
+                    tvMaghribTime.text = prayer.maghrib.formatBasedOnSystemFormat(this@MainActivity)
+                    tvIshaaTime.text = prayer.ishaa.formatBasedOnSystemFormat(this@MainActivity)
+                    tvLocation.text = getString(R.string.txt_location).format(
+                        tracker.getCityName(),
+                        tracker.getCountryName()
+                    )
                 }
-            }, 10)
-        }
+            }
+
+        timeChanged
+            .setListener {
+                val today = Calendar.getInstance()
+                val prayer = Prayer(tracker.location, today)
+                val timeState = TimeState(prayer)
+                val nextPrayer = prayer.getNextPrayer()
+                val timeLeft = prayer.getNextPrayerTime().time - today.time.time
+                val nextPrayerString = Prayer.getPrayerStringId(nextPrayer)
+
+                binding.tvTimeLeft.text = getString(R.string.txt_time_detail).format(
+                    DateUtils.formatElapsedTime(timeLeft / 1000),
+                    getString(nextPrayerString)
+                )
+                binding.ivImageTime.setImageResource(timeState.getImageId())
+            }
+
+        val notificationHandler = NotificationHandler()
+        notificationHandler.setAzanAlarm(this, tracker.location)
+        timeChanged.start()
+        prayerChanging.start()
     }
 
     private fun applyTime() {
@@ -169,10 +157,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        timeChanged.start()
+//        prayerChanging.start()
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        timeChanged.stop()
+//        prayerChanging.stop()
+//    }
+
     override fun onDestroy() {
         super.onDestroy()
-        if (timerRunnable != null) {
-            timerHandler.removeCallbacks(timerRunnable!!)
-        }
+        timeChanged.remove()
+        prayerChanging.remove()
     }
 }

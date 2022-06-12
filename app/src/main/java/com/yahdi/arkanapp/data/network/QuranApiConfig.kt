@@ -1,16 +1,16 @@
 package com.yahdi.arkanapp.data.network
 
+//import com.yahdi.arkanapp.data.deserializer.SurahListDeserializer
 import android.content.Context
 import android.net.ConnectivityManager
-import com.google.gson.FieldNamingPolicy
+import android.net.NetworkCapabilities
+import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.yahdi.arkanapp.BuildConfig
 import com.yahdi.arkanapp.data.deserializer.AyahDeserializer
 import com.yahdi.arkanapp.data.deserializer.QuranDeserializer
 import com.yahdi.arkanapp.data.deserializer.SearchDeserializer
 import com.yahdi.arkanapp.data.deserializer.SurahDeserializer
-//import com.yahdi.arkanapp.data.deserializer.SurahListDeserializer
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.QuranResponse
 import com.yahdi.arkanapp.data.response.SearchResponse
@@ -22,12 +22,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 
 
 object QuranApiConfig {
-    fun getApiService(context: Context): QuranApi {
+    private const val URL = "https://api.alquran.cloud/v1/"
+    fun getApiService(): QuranApi {
         val loggingInterceptor = if (BuildConfig.DEBUG)
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         else
@@ -36,7 +36,7 @@ object QuranApiConfig {
         val client = OkHttpClient.Builder()
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor(defaultHttpClient(context))
+            .addInterceptor(defaultHttpClient())
             .pingInterval(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -58,7 +58,7 @@ object QuranApiConfig {
     }
 
     @Throws(IOException::class)
-    private fun defaultHttpClient(context: Context): Interceptor {
+    private fun defaultHttpClient(): Interceptor {
         return Interceptor { chain ->
             val request = chain.request()
                 .newBuilder()

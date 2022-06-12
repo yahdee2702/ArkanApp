@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/quranContentsFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.QuranContentsFragment"
-        android:label="fragment_quran_contents"
+        android:label="Al-Qur'an"
         tools:layout="@layout/fragment_quran_contents" >
         <action
             android:id="@+id/action_quranContentsFragment_to_surahFragment"
@@ -20,7 +20,6 @@
     <fragment
         android:id="@+id/ayahFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.AyahFragment"
-        android:label="fragment_ayah"
         tools:layout="@layout/fragment_ayah" >
         <argument
             android:name="ayahData"
@@ -29,7 +28,6 @@
     <fragment
         android:id="@+id/surahFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.SurahFragment"
-        android:label="fragment_surah"
         tools:layout="@layout/fragment_surah" >
         <action
             android:id="@+id/action_surahFragment_to_ayahFragment"
@@ -41,16 +39,24 @@
             android:name="jumpTo"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_surahFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="Search" >
         <action
             android:id="@+id/action_searchFragment_to_surahFragment"
             app:destination="@id/surahFragment" />
         <action
             android:id="@+id/action_searchFragment_to_ayahFragment"
             app:destination="@id/ayahFragment" />
+        <argument
+            android:name="surahData"
+            app:argType="com.yahdi.arkanapp.data.response.SurahResponse"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

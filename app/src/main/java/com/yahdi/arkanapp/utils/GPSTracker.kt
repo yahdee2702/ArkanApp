@@ -51,13 +51,14 @@ class GPSTracker(val context: Context): LocationListener {
                 Log.d(TAG, "Application use Network State to get GPS coordinates")
                 _providerInfo = LocationManager.NETWORK_PROVIDER
             }
+            requestLocation()
         } catch (e: Exception) {
             Log.e(TAG, "Impossible to connect to LocationManager", e)
         }
     }
 
     private fun requestLocation() {
-        if (alreadyRequested) return
+        if (alreadyRequested) { return }
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -74,7 +75,7 @@ class GPSTracker(val context: Context): LocationListener {
             this@GPSTracker
         )
         _location = locationManager.getLastKnownLocation(providerInfo)
-        alreadyRequested = true
+        if (_location != null) alreadyRequested = true
     }
 
     fun stopUsingGPS() {

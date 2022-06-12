@@ -9,40 +9,47 @@
     <include
         android:id="@+id/include"
         layout="@layout/row_item_detail_surah"
-        tools:layout_editor_absoluteX="25dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="288dp"
-        android:layout_height="62dp"
-        app:cardCornerRadius="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_ayah_controller"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
             <ImageButton
+                android:id="@+id/btn_next_ayah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_arrow_left"
-                android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/dummy_content_description" />
 
             <ImageButton
+                android:id="@+id/btn_previous_ayah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_arrow_right"
-                android:layout_marginEnd="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/dummy_content_description" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

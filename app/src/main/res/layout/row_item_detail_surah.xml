@@ -3,11 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/TransparentCardViewStyle"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="20dp"
         android:paddingBottom="20dp">
 
@@ -15,8 +16,7 @@
             android:id="@+id/tv_ayah_arabic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="عَمَّ يَتَسَآءَلُوۡنَ"
-            android:textColor="@color/black"
+            android:text="@string/txt_quran_content"
             android:textSize="32sp"
             app:layout_constraintBottom_toTopOf="@id/tv_ayah_latin"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-            android:text="'Amma Yatasaa-aluun"
             android:textSize="12sp"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_ayah_arabic"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="20dp"
-            android:text="Yoru no sora wo kazaru kirei na hana Machi no koe wo gyutto hikari ga tsutsumi komu '"
             android:textSize="16sp"
-            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_ayah_latin"
             app:layout_constraintStart_toStartOf="parent"/>

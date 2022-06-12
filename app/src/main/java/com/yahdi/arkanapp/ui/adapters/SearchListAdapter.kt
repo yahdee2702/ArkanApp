@@ -34,7 +34,7 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.MyViewHolder>()
                 val action = SearchFragmentDirections.actionSearchFragmentToSurahFragment(data.surah!!, data.idInSurah)
                 it.findNavController().navigate(action)
             }
-            binding.tvSearchContent.text = "${data.content} - ${data.surah!!.name} ${data.surah.id}:${data.idInSurah}"
+            binding.tvSearchContent.text = "${data.content} - ${data.surah!!.name} ${data.surah!!.id}:${data.idInSurah}"
         }
     }
 

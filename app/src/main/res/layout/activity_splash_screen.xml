@@ -32,8 +32,7 @@
             android:layout_height="wrap_content"
             android:text="Arkan"
             android:textColor="@color/cyan"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/text_splash_screen"
@@ -41,9 +40,10 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/text_splash_screen"
-            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="italic"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

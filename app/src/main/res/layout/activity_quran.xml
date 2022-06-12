@@ -15,9 +15,9 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/quran_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:elevation="10dp"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/cyan"
+            app:titleCentered="true"
             app:title="Al-Qur'an"
             />
 
@@ -27,10 +27,10 @@
         android:id="@+id/quran_navigation_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:defaultNavHost="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
         app:navGraph="@navigation/quran_navigation" />
