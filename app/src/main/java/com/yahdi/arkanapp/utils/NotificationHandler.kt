@@ -84,6 +84,6 @@ class NotificationHandler(): BroadcastReceiver() {
 
         Log.d("Azan Alarm", "Setting Azan alarm for ${prayer.getNextPrayer().name} in %s".format(DateUtils.formatElapsedTime(timeLeft/1000)))
         alarmManager.cancel(pendingIntent)
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, nextPrayer.time, pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, nextPrayer.time + 1000, pendingIntent)
     }
 }

@@ -3,35 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/font-v26/poppins.xml" value="0.12916666666666668" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/font/poppins.xml" value="0.128125" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_ayah.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_quran_contents.xml" value="0.10666666666666667" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_search.xml" value="0.17346014492753623" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/fragment_surah.xml" value="0.1" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/row_item_search_list.xml" value="0.17346014492753623" />
-        <entry key="..\:/SKL/ArkanApp/app/src/main/res/layout/row_item_surah_list.xml" value="0.17346014492753623" />
-        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_arrow_left.xml" value="0.1015" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_arrow_right.xml" value="0.1015" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_calendar.xml" value="0.1015" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_close.xml" value="0.1" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_search.xml" value="0.1015" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/search_background.xml" value="0.107" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/start_btn_background.xml" value="0.107" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_quran.xml" value="0.33" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/fragment_ayah.xml" value="0.15" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/fragment_quran_contents.xml" value="0.2" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/fragment_search.xml" value="0.22447916666666667" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/fragment_surah.xml" value="0.2" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_basmallah.xml" value="0.2234375" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_detail_surah.xml" value="0.22" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_search_list.xml" value="0.22447916666666667" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_surah_list.xml" value="0.29074074074074074" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/ayah_menu.xml" value="0.2234375" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_main.xml" value="0.2" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/search_background.xml" value="0.119" />
-        <entry key="app/src/main/res/drawable/start_btn_background.xml" value="0.119" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.30359937402190923" />
-        <entry key="app/src/main/res/layout/activity_quran.xml" value="0.12955780029296882" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2238204956054688" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.15628166160081053" />
-        <entry key="app/src/main/res/layout/fragment_ayah.xml" value="0.16323051413987297" />
-        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.28072052001953124" />
-        <entry key="app/src/main/res/layout/fragment_quran_contents.xml" value="0.2592361450195313" />
-        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.30741081199143555" />
-        <entry key="app/src/main/res/layout/fragment_surah.xml" value="0.19651500560619214" />
-        <entry key="app/src/main/res/layout/row_item_detail_surah.xml" value="0.25364248960545294" />
-        <entry key="app/src/main/res/layout/row_item_surah_list.xml" value="0.18135764944275581" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_quran.xml" value="0.18" />
       </map>
     </option>
   </component>
