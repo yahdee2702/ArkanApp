@@ -68,9 +68,6 @@ class SurahFragment : Fragment() {
         quranViewModel.getSurahFromId(navArgs.surahData.id)
             .observe(viewLifecycleOwner) { response ->
                 response.ayahs?.let {
-                    if (Utils.hasBasmallah(it[0])) {
-                        binding.tvBasmallah.visibility = View.VISIBLE
-                    }
                     val newList = it.map {ayah ->
                         ayah.surah = navArgs.surahData
                         ayah

@@ -99,7 +99,7 @@ class Prayer(azanLocation: AzanLocation, private var time: GregorianCalendar) {
             PrayerID.ASSR
         else if (maghrib.time >= currentTime)
             PrayerID.MAGHRIB
-        else if (ishaa.time >= currentTime && nextFajr.time < currentTime)
+        else if (ishaa.time >= currentTime)
             PrayerID.ISHAA
         else
             PrayerID.NEXT_FAJR
