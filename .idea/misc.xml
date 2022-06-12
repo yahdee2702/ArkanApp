@@ -10,8 +10,10 @@
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/ic_search.xml" value="0.1015" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/search_background.xml" value="0.107" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/drawable/start_btn_background.xml" value="0.107" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/font/arabic.xml" value="0.1375" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/font/poppins.xml" value="0.1375" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_quran.xml" value="0.33" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_quran.xml" value="0.25" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/content_main.xml" value="0.1" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/fragment_ayah.xml" value="0.15" />
@@ -21,7 +23,7 @@
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_basmallah.xml" value="0.2234375" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_detail_surah.xml" value="0.22" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_search_list.xml" value="0.22447916666666667" />
-        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_surah_list.xml" value="0.29074074074074074" />
+        <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/layout/row_item_surah_list.xml" value="0.25" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/ayah_menu.xml" value="0.2234375" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_main.xml" value="0.2" />
         <entry key="..\:/skl_projects/season_2/ArkanApp/app/src/main/res/menu/menu_quran.xml" value="0.18" />

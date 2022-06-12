@@ -17,7 +17,12 @@
         <item name="cardViewStyle">@style/MainCardViewStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fontFamily">@font/poppins</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="TitleText">
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Theme.ArkanApp.NoActionBar">

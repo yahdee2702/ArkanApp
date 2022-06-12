@@ -99,7 +99,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAzan() {
         Log.d("Tracker", tracker.isAvailable.toString())
-        if (!tracker.isAvailable) return
+        if (!tracker.isAvailable) {
+            LooperListener()
+                .setDelay(2000)
+                .setListener {
+                    setupAzan()
+                    it.remove()
+                }.start()
+
+            return
+        }
 
         Log.d("Location", "available")
 

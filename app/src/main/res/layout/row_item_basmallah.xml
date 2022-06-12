@@ -9,7 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txt_basmallah"
+        android:textStyle="bold"
+        android:fontFamily="@font/arabic"
         android:layout_gravity="center"
-        android:textSize="32sp"/>
+        android:textSize="36sp"/>
 
 </androidx.cardview.widget.CardView>
