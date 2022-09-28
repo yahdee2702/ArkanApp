@@ -17,6 +17,13 @@ class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
     class MyViewHolder(private val binding: RowItemSurahListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(data: SurahResponse) {
             binding.apply {
+                root.apply {
+                    alpha = 0.0f
+                    animate()
+                        .alpha(1.0f)
+                        .setDuration(200L)
+                        .start()
+                }
                 tvListSurahTitle.text = data.name
                 tvListSurahInfo.text = binding.root.context.getString(R.string.txt_surah_info).format(data.ayahsAmount.toString(), data.revelationType)
                 tvListSurahArabic.text = data.nameArabic.substring(7)

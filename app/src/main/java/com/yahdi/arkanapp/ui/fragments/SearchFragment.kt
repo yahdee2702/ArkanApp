@@ -91,10 +91,10 @@ class SearchFragment : Fragment() {
         quranViewModel.searchData.observe(viewLifecycleOwner) {
             if (it != null) {
                 searchListAdapter.setData(it)
-                loading.isLoading.value = false
             } else {
                 Toast.makeText(context, "Not found!", Toast.LENGTH_SHORT).show()
             }
+            loading.isLoading.value = false
         }
     }
 }

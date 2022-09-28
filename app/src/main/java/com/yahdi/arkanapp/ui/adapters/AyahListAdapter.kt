@@ -19,27 +19,31 @@ class AyahListAdapter() : RecyclerView.Adapter<AyahListAdapter.MyViewHolder>() {
     class MyViewHolder(private val binding: RowItemDetailSurahBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: AyahResponse) {
-            binding.tvAyahArabic.text = binding.root.context.getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
-            binding.tvAyahTranslate.text = data.translation
-            binding.tvAyahLatin.text = data.transliteration
+            binding.apply {
+                tvAyahArabic.text = binding.root.context.getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
+                tvAyahTranslate.text = data.translation
+                tvAyahLatin.text = data.transliteration
 
-            binding.root.setOnLongClickListener {
-                val popupMenu = PopupMenu(it.context, it)
-                popupMenu.menuInflater.inflate(R.menu.ayah_menu, popupMenu.menu)
-                popupMenu.show()
-                popupMenu.setOnMenuItemClickListener { menu ->
-                    when (menu.itemId) {
-                        R.id.action_ayah_read_fullscreen -> {
-                            val navController = it.findNavController()
-                            navController.navigate(SurahFragmentDirections.actionSurahFragmentToAyahFragment(data))
-                            true
+                root.apply {
+                    setOnLongClickListener {
+                        val popupMenu = PopupMenu(it.context, binding.tvAyahArabic)
+                        popupMenu.menuInflater.inflate(R.menu.ayah_menu, popupMenu.menu)
+                        popupMenu.show()
+                        popupMenu.setOnMenuItemClickListener { menu ->
+                            when (menu.itemId) {
+                                R.id.action_ayah_read_fullscreen -> {
+                                    val navController = it.findNavController()
+                                    navController.navigate(SurahFragmentDirections.actionSurahFragmentToAyahFragment(data))
+                                    false
+                                }
+                                else -> {
+                                    false
+                                }
+                            }
                         }
-                        else -> {
-                            false
-                        }
+                        false
                     }
                 }
-                false
             }
         }
 

@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.navigation.ActivityNavigator
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.databinding.ActivityMainBinding
 import com.yahdi.arkanapp.utils.*
@@ -33,20 +34,25 @@ class MainActivity : AppCompatActivity() {
     private val timeChanged = LooperListener()
         .setDelay(1000L)
 
-    private var _tracker: GPSTracker? = null
-    private val tracker get() = _tracker as GPSTracker
+    private lateinit var mApplication: ArkanApplication
+
+    private val tracker: GPSTracker by lazy {
+        mApplication.gpsTracker
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        _tracker = GPSTracker(this)
+        mApplication = application as ArkanApplication
         setContentView(binding.root)
 
         binding.cvQuran.setOnClickListener {
-            startActivity(
-                Intent(this, QuranActivity::class.java),
-            )
+            val destination = ActivityNavigator(this)
+                .createDestination()
+                .setIntent(Intent(this@MainActivity, QuranActivity::class.java))
+
+            ActivityNavigator(this).navigate(destination, null, null, null)
         }
 
         applyTime()
@@ -64,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED
                 ) {
+                    Log.d("Permission", "acquired")
                     setupAzan()
                 } else {
                     Toast.makeText(
@@ -76,14 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkForPermission(mContext: Context) {
-        if (ActivityCompat.checkSelfPermission(
-                mContext,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                mContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (!Utils.canAccessLocation(mContext)) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             )
             return
         }
+
         setupAzan()
     }
 
@@ -103,10 +104,13 @@ class MainActivity : AppCompatActivity() {
             LooperListener()
                 .setDelay(2000)
                 .setListener {
+                    if (!Utils.canAccessLocation(this)) {
+                        it.remove()
+                        return@setListener
+                    }
                     setupAzan()
                     it.remove()
                 }.start()
-
             return
         }
 
@@ -146,8 +150,6 @@ class MainActivity : AppCompatActivity() {
                 binding.ivImageTime.setImageResource(timeState.getImageId())
             }
 
-        val notificationHandler = NotificationHandler()
-        notificationHandler.setAzanAlarm(this, tracker.location)
         timeChanged.start()
         prayerChanging.start()
     }
@@ -166,17 +168,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        timeChanged.start()
-//        prayerChanging.start()
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        timeChanged.stop()
-//        prayerChanging.stop()
-//    }
+    override fun onResume() {
+        super.onResume()
+        timeChanged.start()
+        prayerChanging.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timeChanged.stop()
+        prayerChanging.stop()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -38,36 +38,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="48sp"
+            android:textSize="46sp"
+            android:textStyle="bold"
+            android:layout_marginTop="35dp"
+            android:text="Hola"
             android:format24Hour="HH:mm"
             android:format12Hour="hh:mm a"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_image_time"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_image_time"/>
+            app:layout_constraintBottom_toBottomOf="@id/iv_image_time"
+            app:layout_constraintEnd_toEndOf="@id/iv_image_time"
+            app:layout_constraintStart_toStartOf="@id/iv_image_time"
+            app:layout_constraintTop_toTopOf="@id/iv_image_time"/>
 
         <TextView
             android:id="@+id/tv_time_left"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:layout_height="wrap_content"
             android:text="@string/txt_time_detail"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/dc_waktu_sholat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dc_waktu_sholat"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearLayoutCompat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="-20dp"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginTop="-40dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_image_time"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/iv_image_time">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_quran"
@@ -83,12 +87,12 @@
                         android:id="@+id/img_book"
                         android:layout_width="65dp"
                         android:layout_height="65dp"
+                        android:contentDescription="@string/dummy_content_description"
                         android:src="@drawable/ic_book"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/cyan"
-                        android:contentDescription="@string/dummy_content_description" />
+                        app:tint="@color/cyan" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,9 +134,9 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:contentDescription="@string/dummy_content_description"
                             android:src="@drawable/ic_calendar"
-                            app:tint="?attr/colorOnSecondary"
-                            android:contentDescription="@string/dummy_content_description" />
+                            app:tint="?attr/colorOnSecondary" />
 
                         <TextView
                             android:id="@+id/tv_calender_date_time"
@@ -299,12 +303,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
                     android:orientation="vertical"
-                    >
+                    android:padding="20dp">
+
                     <TextView
                         android:id="@+id/tv_kutipan_islami"
                         android:layout_width="wrap_content"
@@ -319,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/txt_kutipan_islami_desc"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

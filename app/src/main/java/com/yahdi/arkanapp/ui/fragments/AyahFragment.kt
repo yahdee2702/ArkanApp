@@ -13,6 +13,7 @@ import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.viewModel.QuranViewModel
 import com.yahdi.arkanapp.databinding.FragmentAyahBinding
+import com.yahdi.arkanapp.ui.QuranActivity
 import com.yahdi.arkanapp.utils.Utils
 
 class AyahFragment : Fragment() {
@@ -21,12 +22,14 @@ class AyahFragment : Fragment() {
     private val args: AyahFragmentArgs by navArgs()
     private val quranViewModel: QuranViewModel by viewModels()
     private val ayahList = mutableListOf<AyahResponse?>(null, null, null, null)
+    private lateinit var mActivity: QuranActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAyahBinding.inflate(layoutInflater, container, false)
+        mActivity = activity as QuranActivity
         setList()
         setUpButtons()
 
@@ -78,9 +81,12 @@ class AyahFragment : Fragment() {
 
     private fun setData() {
         ayahList[1]?.let { data ->
-            binding.include.tvAyahArabic.text = getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
-            binding.include.tvAyahTranslate.text = data.translation
-            binding.include.tvAyahLatin.text = data.transliteration
+            mActivity.setTitle("${data.surah?.name} ${data.surah?.id}:${data.idInSurah}")
+            binding.include.apply {
+                tvAyahArabic.text = getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
+                tvAyahTranslate.text = data.translation
+                tvAyahLatin.text = data.transliteration
+            }
         }
     }
 }

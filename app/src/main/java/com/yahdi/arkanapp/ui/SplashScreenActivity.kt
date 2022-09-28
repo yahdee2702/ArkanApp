@@ -1,11 +1,13 @@
 package com.yahdi.arkanapp.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.yahdi.arkanapp.R
+import android.view.View
 import com.yahdi.arkanapp.databinding.ActivitySplashScreenBinding
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     private var _binding: ActivitySplashScreenBinding? = null
     private val binding get() = _binding as ActivitySplashScreenBinding
@@ -14,10 +16,20 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnStart.apply {
+            animate()
+                .alpha(1.0f)
+                .setDuration(500L)
+                .setStartDelay(1000L)
+                .start()
+        }
+
         binding.btnStart.setOnClickListener {
             startActivity(
                 Intent(this, MainActivity::class.java)
             )
+            finish()
         }
     }
 }

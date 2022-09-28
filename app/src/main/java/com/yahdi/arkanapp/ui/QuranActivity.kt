@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.AyahResponse
@@ -18,6 +19,7 @@ import com.yahdi.arkanapp.databinding.ActivityQuranBinding
 class QuranActivity : AppCompatActivity() {
     private var _binding: ActivityQuranBinding? = null
     private val binding get() = _binding as ActivityQuranBinding
+    private val appBarConfiguration = AppBarConfiguration(emptySet())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,7 @@ class QuranActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setSupportActionBar(binding.quranToolbar)
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.quran_navigation_fragment)
         val navController = navHostFragment?.findNavController()!!
 
@@ -47,7 +50,7 @@ class QuranActivity : AppCompatActivity() {
             }
         }
 
-        setupActionBarWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     fun setTitle(title: String) {
@@ -57,6 +60,7 @@ class QuranActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.quran_navigation_fragment)
         val navController = navHostFragment?.findNavController()!!
+        onBackPressed()
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

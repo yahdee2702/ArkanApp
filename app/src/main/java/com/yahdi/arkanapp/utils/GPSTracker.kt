@@ -1,6 +1,7 @@
 package com.yahdi.arkanapp.utils
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
@@ -22,19 +23,25 @@ class GPSTracker(val context: Context): LocationListener {
     private var isGPSEnabled = false
     private var isNetworkEnabled = false
     private var isGPSTrackingEnabled = false
-    private var alreadyRequested = false
+
+    private var _locationChangedListener: () -> Unit = {
+
+    }
 
     private var _location: Location? = null
     val location: Location get() {
-        requestLocation()
+        if (!isAvailable) (requestLocation())
         return _location as Location
     }
-    val isAvailable get() = _location != null
+    val isAvailable: Boolean get() {
+        if (_location == null) requestLocation()
+        return _location != null
+    }
 
     private lateinit var locationManager: LocationManager
 
     private var _providerInfo: String? = null
-    val providerInfo get() = _providerInfo as String
+    private val providerInfo get() = _providerInfo as String
 
     init {
         try {
@@ -58,7 +65,6 @@ class GPSTracker(val context: Context): LocationListener {
     }
 
     private fun requestLocation() {
-        if (alreadyRequested) { return }
         if (ActivityCompat.checkSelfPermission(
                 context,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -75,7 +81,6 @@ class GPSTracker(val context: Context): LocationListener {
             this@GPSTracker
         )
         _location = locationManager.getLastKnownLocation(providerInfo)
-        if (_location != null) alreadyRequested = true
     }
 
     fun stopUsingGPS() {
@@ -83,7 +88,7 @@ class GPSTracker(val context: Context): LocationListener {
     }
 
     private fun getGeocoderAddress(context: Context): List<Address>? {
-        requestLocation()
+        if (!isAvailable) requestLocation()
         val geocoder = Geocoder(context, Locale.ENGLISH)
         try {
             return geocoder.getFromLocation(location.latitude, location.longitude, GEOCODER_MAX_RESULTS)
@@ -124,7 +129,12 @@ class GPSTracker(val context: Context): LocationListener {
         }
     }
 
+    fun setOnLocationChangedListener(func: () -> Unit) {
+        _locationChangedListener  = func
+    }
+
     override fun onLocationChanged(p1: Location) {
         _location = p1
+        _locationChangedListener()
     }
 }

@@ -7,14 +7,13 @@ import android.util.Log
 class LooperListener {
     private var key = this::class.java.name
     private var _delay: Long = 1000L // 1 Seconds
-    private var _stoppedDuration: Long = 0L
 
     private var mRunnable: Runnable? = null
     private var tempListener: ((LooperListener) -> Unit)? = null
     private var handler = Handler(Looper.getMainLooper())
 
     fun setListener(listener: (LooperListener) -> Unit): LooperListener {
-        this.tempListener = listener
+        tempListener = listener
         return this
     }
 
@@ -23,18 +22,11 @@ class LooperListener {
         return this
     }
 
-    fun setStoppedDuration(value: Long): LooperListener {
-        _stoppedDuration = value
-        return this
-    }
-
     fun start(startupDelayed: Boolean? = false) {
-        if (tempListener == null) {
-            Log.e(key, "Cannot start when listener is null")
-        }
+        if (tempListener == null) {return}
         handler.postDelayed(object: Runnable {
             override fun run() {
-                tempListener!!(this@LooperListener)
+                tempListener?.invoke(this@LooperListener)
                 mRunnable = this
                 handler.postDelayed(mRunnable!!, _delay)
             }
@@ -42,10 +34,8 @@ class LooperListener {
     }
 
     fun stop() {
-        if (tempListener == null) {
-            Log.e(key, "Cannot stop when listener is null")
-            return
-        }
+        if (tempListener == null) { return }
+        if (mRunnable == null) return
         handler.removeCallbacks(mRunnable!!)
     }
 

@@ -1,9 +1,12 @@
 package com.yahdi.arkanapp.utils
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import com.azan.AzanTimes
 import android.text.format.DateFormat as DateFormat2
 import com.azan.Time
@@ -74,4 +77,12 @@ object Utils {
         calendar.timeInMillis = this.timeInMillis
         return calendar
     }
+
+    fun canAccessLocation(mContext: Context): Boolean = ActivityCompat.checkSelfPermission(
+            mContext,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            mContext,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
 }

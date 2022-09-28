@@ -1,6 +1,7 @@
 package com.yahdi.arkanapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.viewModel.QuranViewModel
 import com.yahdi.arkanapp.databinding.FragmentSurahBinding
@@ -24,10 +26,9 @@ class SurahFragment : Fragment() {
 
     private var _mLayoutManager: LinearLayoutManager? = null
     private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
-
     private val quranViewModel by viewModels<QuranViewModel>()
-
     private var ableToJump = false
+    private var alreadyLoaded = false
 
     private val ayahAdapter by lazy {
         AyahListAdapter()
@@ -49,12 +50,18 @@ class SurahFragment : Fragment() {
 
     private fun initializeRecyclerView() {
         binding.rvAyahList.apply {
-            ViewCompat.setNestedScrollingEnabled(this, false)
+            // ViewCompat.setNestedScrollingEnabled(this, false)
             adapter = ayahAdapter
             layoutManager = mLayoutManager
             addItemDecoration(
                 DividerItemDecoration(context, mLayoutManager.orientation)
             )
+            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    Log.d("Position", mLayoutManager.findFirstVisibleItemPosition().toString())
+                    super.onScrollStateChanged(recyclerView, newState)
+                }
+            })
         }
         if (navArgs.jumpTo != 0) {
             ableToJump = true
@@ -63,8 +70,13 @@ class SurahFragment : Fragment() {
 
     private fun getData() {
         if (!Utils.isOnline(requireContext())) return
+        if (alreadyLoaded) return
+
+        alreadyLoaded = true
+
         val loading = LoadingManager(viewLifecycleOwner, binding.progressSurah)
         loading.isLoading.value = true
+
         quranViewModel.getSurahFromId(navArgs.surahData.id)
             .observe(viewLifecycleOwner) { response ->
                 response.ayahs?.let {
@@ -97,11 +109,5 @@ class SurahFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

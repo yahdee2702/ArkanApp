@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/ayahFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.AyahFragment"
-        tools:layout="@layout/fragment_ayah" >
+        tools:layout="@layout/fragment_ayah">
         <argument
             android:name="ayahData"
             app:argType="com.yahdi.arkanapp.data.response.AyahResponse" />
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/surahFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.SurahFragment"
-        tools:layout="@layout/fragment_surah" >
+        tools:layout="@layout/fragment_surah">
         <action
             android:id="@+id/action_surahFragment_to_ayahFragment"
             app:destination="@id/ayahFragment" />
@@ -46,6 +46,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.yahdi.arkanapp.ui.fragments.SearchFragment"
+        tools:layout="@layout/fragment_search"
         android:label="Search" >
         <action
             android:id="@+id/action_searchFragment_to_surahFragment"
