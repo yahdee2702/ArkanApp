@@ -5,4 +5,12 @@
 </div>
 
 ## About the Project
-Arkan App is a muslim app to enhance your daily muslim activity in ease. With features like Azan and Qur'an.
+Arkan App is a muslim app to enhance your daily muslim activity in ease.
+
+Features:
+- Azan Times
+- Azan Notifications
+- In-app Al-Qur'an
+- Search for surah
+- Search for ayat
+- Indonesian Translation
