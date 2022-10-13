@@ -1,14 +1,12 @@
 package com.yahdi.arkanapp.utils
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import java.io.IOException
-import java.lang.Exception
 import java.util.*
 
 
@@ -44,24 +42,7 @@ class GPSTracker(val context: Context): LocationListener {
     private val providerInfo get() = _providerInfo as String
 
     init {
-        try {
-            locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-            if (isGPSEnabled) {
-                isGPSTrackingEnabled = true
-                Log.d(TAG, "Application use GPS Service")
-                _providerInfo = LocationManager.GPS_PROVIDER
-            } else if (isNetworkEnabled) {
-                isGPSTrackingEnabled = true
-                Log.d(TAG, "Application use Network State to get GPS coordinates")
-                _providerInfo = LocationManager.NETWORK_PROVIDER
-            }
-            requestLocation()
-        } catch (e: Exception) {
-            Log.e(TAG, "Impossible to connect to LocationManager", e)
-        }
+        startGPS()
     }
 
     private fun requestLocation() {
@@ -83,7 +64,28 @@ class GPSTracker(val context: Context): LocationListener {
         _location = locationManager.getLastKnownLocation(providerInfo)
     }
 
-    fun stopUsingGPS() {
+    fun startGPS() {
+        try {
+            locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+            if (isGPSEnabled) {
+                isGPSTrackingEnabled = true
+                Log.d(TAG, "Application use GPS Service")
+                _providerInfo = LocationManager.GPS_PROVIDER
+            } else if (isNetworkEnabled) {
+                isGPSTrackingEnabled = true
+                Log.d(TAG, "Application use Network State to get GPS coordinates")
+                _providerInfo = LocationManager.NETWORK_PROVIDER
+            }
+            requestLocation()
+        } catch (e: Exception) {
+            Log.e(TAG, "Impossible to connect to LocationManager", e)
+        }
+    }
+
+    fun stopGPS() {
         locationManager.removeUpdates(this@GPSTracker)
     }
 
@@ -97,16 +99,6 @@ class GPSTracker(val context: Context): LocationListener {
             Log.e(TAG, "Impossible to connect to Geocoder", e)
         }
         return emptyList()
-    }
-
-    fun getPostalCode(): String? {
-        val addresses: List<Address>? = getGeocoderAddress(context)
-        return if (addresses != null && addresses.isNotEmpty()) {
-            val address: Address = addresses[0]
-            address.postalCode
-        } else {
-            null
-        }
     }
 
     fun getCityName(): String? {
