@@ -35,4 +35,5 @@
     <string name="txt_quran_content">%s (%s)</string>
     <string name="txt_search">Search from %s…</string>
     <string name="txt_basmallah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ</string>
+    <string name="txt_search_content">%s - %s %d:%d</string>
 </resources>

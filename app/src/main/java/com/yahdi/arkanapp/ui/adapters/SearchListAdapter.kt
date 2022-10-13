@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.databinding.RowItemSearchListBinding
-import com.yahdi.arkanapp.ui.fragments.SearchFragmentDirections
+import com.yahdi.arkanapp.ui.fragments.quran_activity.SearchFragmentDirections
 import com.yahdi.arkanapp.utils.diffutils.AyahDiffUtils
 
 class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.MyViewHolder>() {
@@ -30,11 +31,14 @@ class SearchListAdapter : RecyclerView.Adapter<SearchListAdapter.MyViewHolder>()
         }
 
         fun bind(data: AyahResponse) {
-            binding.root.setOnClickListener {
-                val action = SearchFragmentDirections.actionSearchFragmentToSurahFragment(data.surah!!, data.idInSurah)
-                it.findNavController().navigate(action)
+            binding.apply {
+                root.setOnClickListener {
+                    val action = SearchFragmentDirections.actionSearchFragmentToSurahFragment(data.surah!!, data.idInSurah)
+                    it.findNavController().navigate(action)
+                }
+
+                tvSearchContent.text = root.context.getString(R.string.txt_search_content, data.content, data.surah!!.name, data.surah!!.id, data.idInSurah)
             }
-            binding.tvSearchContent.text = "${data.content} - ${data.surah!!.name} ${data.surah!!.id}:${data.idInSurah}"
         }
     }
 
