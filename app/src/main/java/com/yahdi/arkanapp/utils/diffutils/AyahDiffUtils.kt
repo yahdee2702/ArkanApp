@@ -2,7 +2,6 @@ package com.yahdi.arkanapp.utils.diffutils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.yahdi.arkanapp.data.response.AyahResponse
-import com.yahdi.arkanapp.data.response.SurahResponse
 
 class AyahDiffUtils(
     private val oldList: List<AyahResponse>,

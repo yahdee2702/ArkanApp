@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.databinding.RowItemDetailSurahBinding
-import com.yahdi.arkanapp.ui.fragments.SurahFragmentDirections
+import com.yahdi.arkanapp.ui.fragments.quran_activity.SurahFragmentDirections
 import com.yahdi.arkanapp.utils.Utils
 import com.yahdi.arkanapp.utils.diffutils.AyahDiffUtils
 
-class AyahListAdapter() : RecyclerView.Adapter<AyahListAdapter.MyViewHolder>() {
+class AyahListAdapter : RecyclerView.Adapter<AyahListAdapter.MyViewHolder>() {
     private var ayahList: ArrayList<AyahResponse> = arrayListOf()
 
     class MyViewHolder(private val binding: RowItemDetailSurahBinding) :

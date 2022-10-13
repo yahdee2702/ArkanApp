@@ -15,7 +15,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.yahdi.arkanapp.R
-import com.yahdi.arkanapp.services.ArkanAzanService
 import com.yahdi.arkanapp.utils.Prayer
 import com.yahdi.arkanapp.utils.Utils.formatBasedOnSystemFormat
 import java.util.*
@@ -85,7 +84,7 @@ class AzanReceiver: BroadcastReceiver() {
             Log.d("Azan Alarm", "Setting Azan alarm for ${prayer.getNextPrayer().name} in %s".format(
                 DateUtils.formatElapsedTime(timeLeft/1000)))
             alarmManager.cancel(pendingIntent)
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, nextPrayer.time, pendingIntent)
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, nextPrayer.time + 650, pendingIntent)
         }
     }
 
