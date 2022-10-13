@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/quranContentsFragment"
-        android:name="com.yahdi.arkanapp.ui.fragments.QuranContentsFragment"
+        android:name="com.yahdi.arkanapp.ui.fragments.quran_activity.QuranContentsFragment"
         android:label="Al-Qur'an"
         tools:layout="@layout/fragment_quran_contents" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/ayahFragment"
-        android:name="com.yahdi.arkanapp.ui.fragments.AyahFragment"
+        android:name="com.yahdi.arkanapp.ui.fragments.quran_activity.AyahFragment"
         tools:layout="@layout/fragment_ayah">
         <argument
             android:name="ayahData"
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/surahFragment"
-        android:name="com.yahdi.arkanapp.ui.fragments.SurahFragment"
+        android:name="com.yahdi.arkanapp.ui.fragments.quran_activity.SurahFragment"
         tools:layout="@layout/fragment_surah">
         <action
             android:id="@+id/action_surahFragment_to_ayahFragment"
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.yahdi.arkanapp.ui.fragments.SearchFragment"
+        android:name="com.yahdi.arkanapp.ui.fragments.quran_activity.SearchFragment"
         tools:layout="@layout/fragment_search"
         android:label="Search" >
         <action
