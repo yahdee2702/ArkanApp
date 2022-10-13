@@ -4,21 +4,12 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.location.Location
-import android.media.RingtoneManager
-import android.os.Build
 import android.os.IBinder
-import android.text.format.DateUtils
-import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.receiver.AzanReceiver
 import com.yahdi.arkanapp.ui.MainActivity
 import com.yahdi.arkanapp.utils.GPSTracker
-import com.yahdi.arkanapp.utils.Prayer
-import com.yahdi.arkanapp.utils.Utils.formatBasedOnSystemFormat
-import java.util.*
 
 class ArkanAzanService : Service() {
     companion object {
@@ -73,8 +64,8 @@ class ArkanAzanService : Service() {
 
         val notification = NotificationCompat.Builder(this, channelId)
             .setContentIntent(pIntent)
-            .setContentTitle("Arkan App")
-            .setContentText("Prayer Time and Qur\'an")
+            .setContentTitle("Currently Running")
+            .setContentText("Arkan is currently running.")
             .setSmallIcon(R.drawable.ic_logo)
             .build()
 
@@ -82,6 +73,4 @@ class ArkanAzanService : Service() {
         sendAzanSignal(gpsTracker.location)
         return START_NOT_STICKY
     }
-
-
 }
