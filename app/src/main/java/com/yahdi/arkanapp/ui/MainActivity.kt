@@ -4,10 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.format.DateUtils
 import android.util.Log
 import android.widget.Toast
@@ -19,7 +16,6 @@ import com.yahdi.arkanapp.databinding.ActivityMainBinding
 import com.yahdi.arkanapp.utils.*
 import com.yahdi.arkanapp.utils.Utils.formatBasedOnSystemFormat
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.time.chrono.HijrahDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -45,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         mApplication = application as ArkanApplication
+        tracker.startGPS()
         setContentView(binding.root)
 
         binding.cvQuran.setOnClickListener {
@@ -184,5 +181,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         timeChanged.remove()
         prayerChanging.remove()
+        tracker.stopGPS()
     }
 }

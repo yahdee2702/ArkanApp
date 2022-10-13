@@ -1,12 +1,10 @@
-package com.yahdi.arkanapp.ui.fragments
+package com.yahdi.arkanapp.ui.fragments.quran_activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +20,7 @@ class QuranContentsFragment : Fragment() {
     private var _binding: FragmentQuranContentsBinding? = null
     private val binding get() = _binding as FragmentQuranContentsBinding
 
-    private val quranViewModel by viewModels<QuranViewModel>()
+    private val quranViewModel by activityViewModels<QuranViewModel>()
     private val surahListAdapter by lazy {
         SurahListAdapter()
     }

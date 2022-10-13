@@ -1,10 +1,5 @@
 package com.yahdi.arkanapp.data.network
 
-//import com.yahdi.arkanapp.data.deserializer.SurahListDeserializer
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.util.Log
 import com.google.gson.Gson
 import com.yahdi.arkanapp.BuildConfig
 import com.yahdi.arkanapp.data.deserializer.AyahDeserializer
@@ -26,7 +21,6 @@ import java.util.concurrent.TimeUnit
 
 
 object QuranApiConfig {
-    private const val URL = "https://api.alquran.cloud/v1/"
     fun getApiService(): QuranApi {
         val loggingInterceptor = if (BuildConfig.DEBUG)
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

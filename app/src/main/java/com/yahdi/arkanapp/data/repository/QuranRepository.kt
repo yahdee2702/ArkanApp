@@ -5,7 +5,6 @@ import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.QuranResponse
 import com.yahdi.arkanapp.data.response.SearchResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
-import retrofit2.Call
 import retrofit2.Response
 
 class QuranRepository(private val api: QuranApi) {
