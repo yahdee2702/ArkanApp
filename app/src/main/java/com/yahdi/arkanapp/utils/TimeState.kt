@@ -1,7 +1,5 @@
 package com.yahdi.arkanapp.utils
 
-import com.azan.Azan
-import com.azan.astrologicalCalc.SimpleDate
 import com.yahdi.arkanapp.R
 import java.util.*
 

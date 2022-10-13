@@ -1,12 +1,12 @@
 package com.yahdi.arkanapp.data.deserializer
 
-import android.util.Log
-import com.google.gson.*
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.yahdi.arkanapp.data.response.AyahResponse
 import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.utils.Utils
 import java.lang.reflect.Type
-import java.text.DateFormat
 
 class SurahDeserializer : JsonDeserializer<SurahResponse> {
     override fun deserialize(

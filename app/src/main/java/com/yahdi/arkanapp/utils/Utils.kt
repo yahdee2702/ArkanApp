@@ -7,16 +7,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import com.azan.AzanTimes
-import android.text.format.DateFormat as DateFormat2
-import com.azan.Time
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.AyahResponse
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import android.text.format.DateFormat as DateFormat2
 
 object Utils {
     fun getDefaultGson(): GsonBuilder = GsonBuilder()

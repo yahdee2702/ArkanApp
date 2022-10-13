@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.response.SurahResponse
 import com.yahdi.arkanapp.databinding.RowItemSurahListBinding
-import com.yahdi.arkanapp.ui.fragments.QuranContentsFragmentDirections
+import com.yahdi.arkanapp.ui.fragments.quran_activity.QuranContentsFragmentDirections
 import com.yahdi.arkanapp.utils.diffutils.SurahDiffUtils
 
 class SurahListAdapter: RecyclerView.Adapter<SurahListAdapter.MyViewHolder>() {
