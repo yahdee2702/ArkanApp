@@ -1,4 +1,4 @@
-package com.yahdi.arkanapp.ui.fragments
+package com.yahdi.arkanapp.ui.fragments.quran_activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +34,7 @@ class SearchFragment : Fragment() {
     private var _mLayoutManager: LinearLayoutManager? = null
     private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
 
-    private val quranViewModel by viewModels<QuranViewModel>()
+    private val quranViewModel by activityViewModels<QuranViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

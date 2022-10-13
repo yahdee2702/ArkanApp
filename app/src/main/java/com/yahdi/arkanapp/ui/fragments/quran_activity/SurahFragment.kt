@@ -1,11 +1,13 @@
-package com.yahdi.arkanapp.ui.fragments
+package com.yahdi.arkanapp.ui.fragments.quran_activity
 
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.core.view.ViewCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,7 +28,7 @@ class SurahFragment : Fragment() {
 
     private var _mLayoutManager: LinearLayoutManager? = null
     private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
-    private val quranViewModel by viewModels<QuranViewModel>()
+    private val quranViewModel by activityViewModels<QuranViewModel>()
     private var ableToJump = false
     private var alreadyLoaded = false
 
@@ -41,7 +43,7 @@ class SurahFragment : Fragment() {
         _binding = FragmentSurahBinding.inflate(layoutInflater, container, false)
         _mLayoutManager = LinearLayoutManager(context)
 
-        setHasOptionsMenu(true)
+        setupMenu()
         initializeRecyclerView()
         getData()
 
@@ -94,20 +96,28 @@ class SurahFragment : Fragment() {
             }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_quran, menu)
-        super.onCreateOptionsMenu(menu, menuInflater)
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                val action =
-                    SurahFragmentDirections.actionSurahFragmentToSearchFragment(navArgs.surahData)
-                this.findNavController().navigate(action)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    private val fragmentMenuProvider = object: MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.menu_quran, menu)
         }
+
+        override fun onMenuItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.action_search -> {
+                    val action =
+                        SurahFragmentDirections.actionSurahFragmentToSearchFragment(navArgs.surahData)
+                    this@SurahFragment.findNavController().navigate(action)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 }
