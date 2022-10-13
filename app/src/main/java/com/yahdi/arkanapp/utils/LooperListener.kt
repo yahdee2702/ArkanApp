@@ -39,11 +39,6 @@ class LooperListener {
         handler.removeCallbacks(mRunnable!!)
     }
 
-    fun restart() {
-        this.stop()
-        this.start()
-    }
-
     fun remove() {
         if (tempListener == null) {
             Log.e(key, "Cannot remove when listener is already null")
