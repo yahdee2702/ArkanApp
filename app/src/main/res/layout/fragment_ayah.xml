@@ -31,7 +31,7 @@
                 android:padding="20dp">
 
                 <ImageButton
-                    android:id="@+id/btn_next_ayah"
+                    android:id="@+id/btn_previous_ayah"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -42,7 +42,7 @@
                     android:contentDescription="@string/dummy_content_description" />
 
                 <ImageButton
-                    android:id="@+id/btn_previous_ayah"
+                    android:id="@+id/btn_next_ayah"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"

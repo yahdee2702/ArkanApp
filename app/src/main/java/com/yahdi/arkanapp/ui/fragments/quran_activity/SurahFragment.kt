@@ -7,6 +7,7 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.viewModel.QuranViewModel
+import com.yahdi.arkanapp.data.viewModel.SurahViewModel
 import com.yahdi.arkanapp.databinding.FragmentSurahBinding
 import com.yahdi.arkanapp.ui.adapters.AyahListAdapter
 import com.yahdi.arkanapp.utils.LoadingManager
@@ -28,7 +30,7 @@ class SurahFragment : Fragment() {
 
     private var _mLayoutManager: LinearLayoutManager? = null
     private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
-    private val quranViewModel by activityViewModels<QuranViewModel>()
+    private val surahViewModel by viewModels<SurahViewModel>()
     private var ableToJump = false
     private var alreadyLoaded = false
 
@@ -38,7 +40,7 @@ class SurahFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSurahBinding.inflate(layoutInflater, container, false)
         _mLayoutManager = LinearLayoutManager(context)
@@ -52,13 +54,12 @@ class SurahFragment : Fragment() {
 
     private fun initializeRecyclerView() {
         binding.rvAyahList.apply {
-            // ViewCompat.setNestedScrollingEnabled(this, false)
             adapter = ayahAdapter
             layoutManager = mLayoutManager
             addItemDecoration(
                 DividerItemDecoration(context, mLayoutManager.orientation)
             )
-            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     Log.d("Position", mLayoutManager.findFirstVisibleItemPosition().toString())
                     super.onScrollStateChanged(recyclerView, newState)
@@ -79,10 +80,12 @@ class SurahFragment : Fragment() {
         val loading = LoadingManager(viewLifecycleOwner, binding.progressSurah)
         loading.isLoading.value = true
 
-        quranViewModel.getSurahFromId(navArgs.surahData.id)
-            .observe(viewLifecycleOwner) { response ->
+        surahViewModel.apply {
+            getSurahFromId(navArgs.surahData.id)
+
+            surahData.observe(viewLifecycleOwner) { response ->
                 response.ayahs?.let {
-                    val newList = it.map {ayah ->
+                    val newList = it.map { ayah ->
                         ayah.surah = navArgs.surahData
                         ayah
                     }
@@ -94,6 +97,7 @@ class SurahFragment : Fragment() {
                     loading.isLoading.value = false
                 }
             }
+        }
     }
 
     private fun setupMenu() {
@@ -102,7 +106,7 @@ class SurahFragment : Fragment() {
         menuHost.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private val fragmentMenuProvider = object: MenuProvider {
+    private val fragmentMenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             menuInflater.inflate(R.menu.menu_quran, menu)
         }

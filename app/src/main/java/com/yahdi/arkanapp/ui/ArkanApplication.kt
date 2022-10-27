@@ -13,9 +13,6 @@ class ArkanApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         _gpsTracker = GPSTracker(this)
-        if (!ArkanAzanService.isAvailable(this)) {
-            applicationContext.startForegroundService(Intent(this, ArkanAzanService::class.java))
-        }
     }
 }
 

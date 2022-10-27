@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.data.viewModel.QuranViewModel
+import com.yahdi.arkanapp.data.viewModel.SearchViewModel
 import com.yahdi.arkanapp.databinding.FragmentSearchBinding
 import com.yahdi.arkanapp.ui.adapters.SearchListAdapter
 import com.yahdi.arkanapp.utils.LoadingManager
@@ -34,7 +36,7 @@ class SearchFragment : Fragment() {
     private var _mLayoutManager: LinearLayoutManager? = null
     private val mLayoutManager get() = _mLayoutManager as LinearLayoutManager
 
-    private val quranViewModel by activityViewModels<QuranViewModel>()
+    private val searchViewModel by viewModels<SearchViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,9 +72,9 @@ class SearchFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     if (query.isNotEmpty()) {
                         if (args.surahData != null ){
-                            quranViewModel.searchBySurah(args.surahData!!.id, query)
+                            searchViewModel.searchBySurah(args.surahData!!.id, query)
                         } else {
-                            quranViewModel.searchByAll(query)
+                            searchViewModel.searchByAll(query)
                         }
                         loading.isLoading.value = true
                     }
@@ -88,7 +90,7 @@ class SearchFragment : Fragment() {
 
     private fun setData() {
         if (!Utils.isOnline(requireContext())) return
-        quranViewModel.searchData.observe(viewLifecycleOwner) {
+        searchViewModel.searchData.observe(viewLifecycleOwner) {
             if (it != null) {
                 searchListAdapter.setData(it)
             } else {

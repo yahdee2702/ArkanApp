@@ -46,10 +46,6 @@ class ArkanAzanService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         _gpsTracker = GPSTracker(this)
 
-        gpsTracker.setOnLocationChangedListener {
-            sendAzanSignal(gpsTracker.location)
-        }
-
         val mIntent = Intent(this, MainActivity::class.java)
         val pIntent = PendingIntent.getActivity(this, 0, mIntent, PendingIntent.FLAG_IMMUTABLE)
 
@@ -70,7 +66,14 @@ class ArkanAzanService : Service() {
             .build()
 
         startForeground(FOREGROUND_ID, notification)
-        sendAzanSignal(gpsTracker.location)
+        gpsTracker.setOnLocationChangedListener {
+            if (gpsTracker.isAvailable) {
+                sendAzanSignal(gpsTracker.location)
+            }
+        }
+        if (gpsTracker.isAvailable) {
+            sendAzanSignal(gpsTracker.location)
+        }
         return START_NOT_STICKY
     }
 }

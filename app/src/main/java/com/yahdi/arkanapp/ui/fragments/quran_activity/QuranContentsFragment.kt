@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.activityViewModels
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +23,7 @@ class QuranContentsFragment : Fragment() {
     private var _binding: FragmentQuranContentsBinding? = null
     private val binding get() = _binding as FragmentQuranContentsBinding
 
-    private val quranViewModel by activityViewModels<QuranViewModel>()
+    private val quranViewModel by viewModels<QuranViewModel>()
     private val surahListAdapter by lazy {
         SurahListAdapter()
     }
@@ -33,7 +36,7 @@ class QuranContentsFragment : Fragment() {
     ): View {
         _binding = FragmentQuranContentsBinding.inflate(inflater, container, false)
 
-        setHasOptionsMenu(true)
+        setupMenu()
         initializeRecyclerView()
         setUpSearch()
         getData()
@@ -65,19 +68,27 @@ class QuranContentsFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.menu_quran, menu)
+    private fun setupMenu() {
+        val menuHost = requireActivity() as MenuHost
+        menuHost.addMenuProvider(fragmentMenuProvider, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                val action = QuranContentsFragmentDirections.actionQuranContentsFragmentToSearchFragment2(null)
-                this.findNavController().navigate(action)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    private val fragmentMenuProvider = object: MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.menu_quran, menu)
         }
+
+        override fun onMenuItemSelected(item: MenuItem): Boolean {
+            return when (item.itemId) {
+                R.id.action_search -> {
+                    val action = QuranContentsFragmentDirections.actionQuranContentsFragmentToSearchFragment2(null)
+                    this@QuranContentsFragment.findNavController().navigate(action)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun initializeRecyclerView() {
@@ -95,10 +106,13 @@ class QuranContentsFragment : Fragment() {
         if (!Utils.isOnline(requireContext())) return
         val loading = LoadingManager(viewLifecycleOwner, binding.progressMain)
         loading.isLoading.value = true
-        quranViewModel.getQuranData().observe(viewLifecycleOwner) {
-            loading.isLoading.value = false
-            surahList = ArrayList(it)
-            surahListAdapter.setData(surahList)
+        quranViewModel.apply {
+            getQuranData()
+            quranData.observe(viewLifecycleOwner) {
+                loading.isLoading.value = false
+                surahList = ArrayList(it)
+                surahListAdapter.setData(surahList)
+            }
         }
     }
 }

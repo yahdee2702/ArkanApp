@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.ActivityNavigator
 import com.yahdi.arkanapp.R
 import com.yahdi.arkanapp.databinding.ActivityMainBinding
+import com.yahdi.arkanapp.services.ArkanAzanService
 import com.yahdi.arkanapp.utils.*
 import com.yahdi.arkanapp.utils.Utils.formatBasedOnSystemFormat
 import java.text.SimpleDateFormat
@@ -41,7 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         mApplication = application as ArkanApplication
-        tracker.startGPS()
         setContentView(binding.root)
 
         binding.cvQuran.setOnClickListener {
@@ -86,10 +87,15 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 ),
                 1000
             )
             return
+        }
+
+        tracker.setOnLocationChangedListener {
+            setupAzan()
         }
 
         setupAzan()
@@ -97,20 +103,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAzan() {
         Log.d("Tracker", tracker.isAvailable.toString())
-        if (!tracker.isAvailable) {
-            LooperListener()
-                .setDelay(2000)
-                .setListener {
-                    if (!Utils.canAccessLocation(this)) {
-                        it.remove()
-                        return@setListener
-                    }
-                    setupAzan()
-                    it.remove()
-                }.start()
-            return
-        }
-
+        if (!tracker.isAvailable) { return }
         Log.d("Location", "available")
 
         prayerChanging
@@ -149,6 +142,10 @@ class MainActivity : AppCompatActivity() {
 
         timeChanged.start()
         prayerChanging.start()
+
+        if (!ArkanAzanService.isAvailable(this)) {
+            applicationContext.startForegroundService(Intent(this, ArkanAzanService::class.java))
+        }
     }
 
     private fun applyTime() {

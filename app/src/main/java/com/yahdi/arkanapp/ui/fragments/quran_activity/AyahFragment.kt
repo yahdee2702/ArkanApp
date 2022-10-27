@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.yahdi.arkanapp.R
+import com.yahdi.arkanapp.data.response.AyahRangeData
 import com.yahdi.arkanapp.data.response.AyahResponse
-import com.yahdi.arkanapp.data.viewModel.QuranViewModel
+import com.yahdi.arkanapp.data.viewModel.AyahViewModel
 import com.yahdi.arkanapp.databinding.FragmentAyahBinding
 import com.yahdi.arkanapp.ui.QuranActivity
 import com.yahdi.arkanapp.utils.Utils
@@ -18,8 +19,8 @@ class AyahFragment : Fragment() {
     private var _binding: FragmentAyahBinding? = null
     private val binding get() = _binding as FragmentAyahBinding
     private val args: AyahFragmentArgs by navArgs()
-    private val quranViewModel: QuranViewModel by activityViewModels()
-    private val ayahList = mutableListOf<AyahResponse?>(null, null, null, null)
+    private val ayahViewModel: AyahViewModel by viewModels()
+    private var currentAyah: AyahRangeData? = null
     private lateinit var mActivity: QuranActivity
 
     override fun onCreateView(
@@ -36,55 +37,41 @@ class AyahFragment : Fragment() {
 
     private fun setUpButtons() {
         binding.btnNextAyah.setOnClickListener {
-            if (ayahList[0] != null) {
-                ayahList[2] = ayahList[1]
-                ayahList[1] = ayahList[0]
-                ayahList[0] = null
-                setList()
-            }
+            currentAyah?.goNext()
+            updateData()
         }
 
         binding.btnPreviousAyah.setOnClickListener {
-            if (ayahList[2] != null) {
-                ayahList[0] = ayahList[1]
-                ayahList[1] = ayahList[2]
-                ayahList[2] = null
-                setList()
-            }
+            currentAyah?.goPrevious()
+            updateData()
+        }
+    }
+
+    private fun updateData() {
+        currentAyah?.let {
+            if (ayahViewModel.ayahData.value?.isLoading == true || ayahViewModel.ayahData.value == null) return@let
+            ayahViewModel.getAyahFromId(it.current.id)
         }
     }
 
     private fun setList() {
-        if (ayahList[1] == null) {
-            ayahList[1] = args.ayahData
-        }
-        val currentId = ayahList[1]!!.id
-        val nextAyah = if (currentId in 1..6235) currentId + 1 else 1
-        val previousAyah = if(currentId in 2..6236) currentId - 1 else 6236
-
-        if (ayahList[0] == null) {
-            quranViewModel.getAyahFromId(nextAyah).observe(viewLifecycleOwner) {
-                ayahList[0] = it
+        ayahViewModel.apply {
+            getAyahFromId(ayahData.value?.response?.current?.id ?: args.ayahData.id)
+            ayahData.observe(viewLifecycleOwner) {
+                if (it.isSuccess && it.response != null) {
+                    currentAyah = it.response
+                    setData(it.response!!.current)
+                }
             }
         }
-
-        if (ayahList[2] == null) {
-            quranViewModel.getAyahFromId(previousAyah).observe(viewLifecycleOwner) {
-                ayahList[2] = it
-            }
-        }
-
-        setData()
     }
 
-    private fun setData() {
-        ayahList[1]?.let { data ->
-            mActivity.setTitle("${data.surah?.name} ${data.surah?.id}:${data.idInSurah}")
-            binding.include.apply {
-                tvAyahArabic.text = getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
-                tvAyahTranslate.text = data.translation
-                tvAyahLatin.text = data.transliteration
-            }
+    private fun setData(data: AyahResponse) {
+        mActivity.setTitle("${data.surah?.name} ${data.surah?.id}:${data.idInSurah}")
+        binding.include.apply {
+            tvAyahArabic.text = getString(R.string.txt_quran_content).format(Utils.removeBasmallah(data), data.idInSurah)
+            tvAyahTranslate.text = data.translation
+            tvAyahLatin.text = data.transliteration
         }
     }
 }
