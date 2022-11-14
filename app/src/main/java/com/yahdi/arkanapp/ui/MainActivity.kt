@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
@@ -86,16 +85,11 @@ class MainActivity : AppCompatActivity() {
                 this,
                 arrayOf(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION
                 ),
                 1000
             )
             return
-        }
-
-        tracker.setOnLocationChangedListener {
-            setupAzan()
         }
 
         setupAzan()
@@ -103,7 +97,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAzan() {
         Log.d("Tracker", tracker.isAvailable.toString())
-        if (!tracker.isAvailable) { return }
+        if (!tracker.isAvailable) {
+            tracker.setOnLocationChangedListener {
+                setupAzan()
+            }
+            return
+        }
         Log.d("Location", "available")
 
         prayerChanging
